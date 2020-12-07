@@ -1,0 +1,13 @@
+body {
+  font-family: sans-serif;
+  background: #333;
+  color: #fff;
+}
+
+a {
+  color: aquamarine;
+}
+
+section:target {
+  color: red;
+}
