@@ -11,3 +11,11 @@ a {
 section:target {
   color: red;
 }
+
+table {
+  font-family: monospace;
+}
+
+.byte {
+  background-color: #000;
+}
