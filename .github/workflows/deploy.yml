@@ -12,25 +12,25 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Get npm cache directory 📦
-        id: npm-cache
+      - name: Get yarn cache directory 📦
+        id: yarn-cache
         run: |
-          echo "::set-output name=dir::$(npm config get cache)"
+          echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache node modules 📦
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
-          path: ${{ steps.npm-cache.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node
 
       - name: Install and Build 🔧
         run: |
-          npm ci
-          npm run build
+          yarn install --frozen-lockfile
+          yarn build
           touch build/.nojekyll
 
       - name: Deploy 🚀
