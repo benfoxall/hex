@@ -20,5 +20,9 @@
   "homepage": "https://github.com/benfoxall/hex#readme",
   "devDependencies": {
     "snowpack": "^2.18.1"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }
