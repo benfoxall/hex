@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export const Hex = ({ blob }) => {
   const [buffer, setBuffer] = useState(new ArrayBuffer());
@@ -7,69 +7,62 @@ export const Hex = ({ blob }) => {
     blob.arrayBuffer().then(setBuffer);
   }, [blob]);
 
-  console.log(buffer);
+  const BYTES = 16;
 
   const view = new DataView(buffer);
-  const rows = Math.ceil(view.byteLength / 4);
+  const rows = Math.ceil(view.byteLength / BYTES);
+
+  /*
+  approach 
+    - on resize (once)
+    - check that we're within bounds
+    - resize if necessary
+  */
 
   return (
     <table>
-      <colgroup>
-        <col className="address" />
-        <col span="4" className="byte" />
-        <col span="4" className="ascii" />
-      </colgroup>
       <tbody>
-        {repeat(rows, (i) => (
-          <tr key={i}>
-            <td>{(i * 4).toString(16).padStart(4, ".")}</td>
+        {repeat(rows, (i) => {
+          const l = Math.min(BYTES, buffer.byteLength - i * BYTES);
+          const sub = new DataView(buffer, i * BYTES, l);
 
-            <td>
-              <Byte view={view} offset={i * 4} />
-            </td>
-            <td>
-              <Byte view={view} offset={i * 4 + 1} />
-            </td>
-            <td>
-              <Byte view={view} offset={i * 4 + 2} />
-            </td>
-            <td>
-              <Byte view={view} offset={i * 4 + 3} />
-            </td>
+          return (
+            <tr key={i}>
+              <td>{(i * 4).toString(16).padStart(4, ".")}</td>
 
-            <td>
-              <Ascii view={view} offset={i * 4} />
-            </td>
-            <td>
-              <Ascii view={view} offset={i * 4 + 1} />
-            </td>
-            <td>
-              <Ascii view={view} offset={i * 4 + 2} />
-            </td>
-            <td>
-              <Ascii view={view} offset={i * 4 + 3} />
-            </td>
-          </tr>
-        ))}
+              <td>
+                <HexPairs view={sub} />
+              </td>
+
+              <td>
+                <Ascii view={sub} />
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
 };
 
-const Byte = ({ view, offset }) => {
-  if (view.byteLength > offset) {
-    return view.getUint8(offset).toString(16).padStart(2, ".");
-  } else {
-    return "__";
+const HexPairs = ({ view }) => {
+  let acc = "";
+
+  for (let i = 0; i < view.byteLength; i++) {
+    acc += view.getUint8(i).toString(16).padStart(2, ".") + " ";
   }
+
+  return acc;
 };
 
-const Ascii = ({ view, offset }) => {
-  if (view.byteLength > offset) {
-    return String.fromCharCode(view.getUint8(offset));
-  } else {
-    return "_";
+const Ascii = ({ view }) => {
+  let acc = "";
+
+  for (let i = 0; i < view.byteLength; i++) {
+    acc += String.fromCharCode(view.getUint8(i));
   }
+
+  return acc;
 };
 
 function repeat(length, fn) {
