@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const Hex = ({ blob }) => {
   const [buffer, setBuffer] = useState(new ArrayBuffer());
@@ -7,10 +7,12 @@ export const Hex = ({ blob }) => {
     blob.arrayBuffer().then(setBuffer);
   }, [blob]);
 
-  const BYTES = 16;
+  // How many bytes should be displayed in a single row
+  // todo: update by screen width
+  const bytesPerRow = 16;
 
   const view = new DataView(buffer);
-  const rows = Math.ceil(view.byteLength / BYTES);
+  const rows = Math.ceil(view.byteLength / bytesPerRow);
 
   /*
   approach 
@@ -23,8 +25,8 @@ export const Hex = ({ blob }) => {
     <table>
       <tbody>
         {repeat(rows, (i) => {
-          const l = Math.min(BYTES, buffer.byteLength - i * BYTES);
-          const sub = new DataView(buffer, i * BYTES, l);
+          const l = Math.min(bytesPerRow, buffer.byteLength - i * bytesPerRow);
+          const sub = new DataView(buffer, i * bytesPerRow, l);
 
           return (
             <tr key={i}>

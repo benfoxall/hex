@@ -35,13 +35,20 @@ a {
   color: aquamarine;
 }
 
+table {
+  display: inline-block;
+}
+
 td {
   padding: 0.2em;
 }
 td:nth-child(1) {
   background-color: aqua;
   color: #000;
-  width: 1em;
+}
+
+td:nth-child(2) {
+  padding: 0.2em 3em;
 }
 
 .byte {
