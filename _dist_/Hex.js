@@ -1,61 +1,37 @@
-import React, {useEffect, useState} from "../web_modules/react.js";
+import React, {useEffect, useRef, useState} from "../web_modules/react.js";
 export const Hex = ({blob}) => {
   const [buffer, setBuffer] = useState(new ArrayBuffer());
   useEffect(() => {
     blob.arrayBuffer().then(setBuffer);
   }, [blob]);
-  console.log(buffer);
+  const BYTES = 16;
   const view = new DataView(buffer);
-  const rows = Math.ceil(view.byteLength / 4);
-  return /* @__PURE__ */ React.createElement("table", null, /* @__PURE__ */ React.createElement("colgroup", null, /* @__PURE__ */ React.createElement("col", {
-    className: "address"
-  }), /* @__PURE__ */ React.createElement("col", {
-    span: "4",
-    className: "byte"
-  }), /* @__PURE__ */ React.createElement("col", {
-    span: "4",
-    className: "ascii"
-  })), /* @__PURE__ */ React.createElement("tbody", null, repeat(rows, (i) => /* @__PURE__ */ React.createElement("tr", {
-    key: i
-  }, /* @__PURE__ */ React.createElement("td", null, (i * 4).toString(16).padStart(4, ".")), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Byte, {
-    view,
-    offset: i * 4
-  })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Byte, {
-    view,
-    offset: i * 4 + 1
-  })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Byte, {
-    view,
-    offset: i * 4 + 2
-  })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Byte, {
-    view,
-    offset: i * 4 + 3
-  })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Ascii, {
-    view,
-    offset: i * 4
-  })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Ascii, {
-    view,
-    offset: i * 4 + 1
-  })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Ascii, {
-    view,
-    offset: i * 4 + 2
-  })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Ascii, {
-    view,
-    offset: i * 4 + 3
-  }))))));
+  const rows = Math.ceil(view.byteLength / BYTES);
+  return /* @__PURE__ */ React.createElement("table", null, /* @__PURE__ */ React.createElement("tbody", null, repeat(rows, (i) => {
+    const l = Math.min(BYTES, buffer.byteLength - i * BYTES);
+    const sub = new DataView(buffer, i * BYTES, l);
+    return /* @__PURE__ */ React.createElement("tr", {
+      key: i
+    }, /* @__PURE__ */ React.createElement("td", null, (i * 4).toString(16).padStart(4, ".")), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(HexPairs, {
+      view: sub
+    })), /* @__PURE__ */ React.createElement("td", null, /* @__PURE__ */ React.createElement(Ascii, {
+      view: sub
+    })));
+  })));
 };
-const Byte = ({view, offset}) => {
-  if (view.byteLength > offset) {
-    return view.getUint8(offset).toString(16).padStart(2, ".");
-  } else {
-    return "__";
+const HexPairs = ({view}) => {
+  let acc = "";
+  for (let i = 0; i < view.byteLength; i++) {
+    acc += view.getUint8(i).toString(16).padStart(2, ".") + " ";
   }
+  return acc;
 };
-const Ascii = ({view, offset}) => {
-  if (view.byteLength > offset) {
-    return String.fromCharCode(view.getUint8(offset));
-  } else {
-    return "_";
+const Ascii = ({view}) => {
+  let acc = "";
+  for (let i = 0; i < view.byteLength; i++) {
+    acc += String.fromCharCode(view.getUint8(i));
   }
+  return acc;
 };
 function repeat(length, fn) {
   return Array.from({length}, (_, i) => fn(i));
