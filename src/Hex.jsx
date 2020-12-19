@@ -12,11 +12,11 @@ const MemoRow = memo(({ index, buffer, bytesPerRow }) => {
       <div>{(index * 4).toString(16).padStart(4, ".")}</div>
 
       <div>
-        <HexPairs u8={u8} />
+        <HexPairs u8={u8} size={bytesPerRow} />
       </div>
 
       <div>
-        <Ascii u8={u8} />
+        <Ascii u8={u8} size={bytesPerRow} />
       </div>
     </div>
   );
@@ -56,30 +56,24 @@ export const Hex = ({ blob }) => {
     <>
       <div
         ref={parentRef}
-        className="List"
         style={{
-          height: `200px`,
-          width: `800px`,
           overflow: "auto",
         }}
       >
         <div
           style={{
             height: `${rowVirtualizer.totalSize}px`,
-            width: "100%",
             position: "relative",
           }}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) => (
             <div
               key={virtualRow.index}
-              className={virtualRow.index % 2 ? "ListItemOdd" : "ListItemEven"}
               style={{
                 position: "absolute",
                 top: 0,
                 left: 0,
-                width: "100%",
-                height: `${virtualRow.size}px`,
+
                 transform: `translateY(${virtualRow.start}px)`,
               }}
             >
@@ -96,10 +90,12 @@ export const Hex = ({ blob }) => {
   );
 };
 
-const HexPairs = ({ u8 }) => {
-  return u8.reduce((acc, value) => {
+const HexPairs = ({ u8, size }) => {
+  const str = u8.reduce((acc, value) => {
     return acc + value.toString(16).padStart(2, "0") + " ";
   }, "");
+
+  return str.padEnd(size * 3 - 1, "_");
 };
 
 const Ascii = ({ u8 }) => {
