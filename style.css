@@ -15,10 +15,11 @@ h3 {
 main {
   background: #222;
   transition: 0.5s;
-  /* box-shadow: inset aquamarine 0px 0px 0px 0px; */
+  box-shadow: inset aquamarine 0px 0px 0px 0px;
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  padding: 1.5em;
+  gap: 1em;
   position: absolute;
   bottom: 0;
   top: 0;
@@ -28,7 +29,7 @@ main {
 
 main.dragging {
   background: #000;
-  /* box-shadow: inset rgb(194, 186, 186) 0px 1px 0px 20px; */
+  box-shadow: inset rgb(247, 0, 255, 0.7) 0px 1px 0px 50px;
 }
 
 a {
@@ -37,7 +38,7 @@ a {
 
 .row {
   display: flex;
-
+  letter-spacing: 0.1em;
   width: 100%;
 }
 
