@@ -15,7 +15,7 @@ h3 {
 main {
   background: #222;
   transition: 0.5s;
-  box-shadow: inset aquamarine 0px 0px 0px 0px;
+  /* box-shadow: inset aquamarine 0px 0px 0px 0px; */
   display: flex;
   flex-direction: column;
   padding: 1em;
@@ -28,20 +28,34 @@ main {
 
 main.dragging {
   background: #000;
-  box-shadow: inset rgb(255, 255, 255) 0px 1px 0px 20px;
+  /* box-shadow: inset rgb(194, 186, 186) 0px 1px 0px 20px; */
 }
 
 a {
   color: aquamarine;
 }
 
-td {
-  padding: 0.2em;
+.row {
+  display: flex;
+
+  width: 100%;
 }
-td:nth-child(1) {
+
+.row div {
+  padding: 0.2em;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.row div:nth-child(1) {
   background-color: aqua;
   color: #000;
-  width: 1em;
+  flex: 0;
+}
+
+.row div:nth-child(2) {
+  padding: 0.2em 3em;
+  flex: 3;
 }
 
 .byte {
@@ -52,4 +66,9 @@ header {
   display: flex;
   gap: 1em;
   position: sticky;
+}
+
+.container {
+  height: 100%;
+  padding: 1em;
 }
