@@ -1,8 +1,24 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Hex } from "./Hex";
 import { useDropzone } from "react-dropzone";
 
 const blob = new Blob([
+  "one",
+  "two",
+  2345,
+  "and some other szfsdfdsafds!!DSF",
+  "one",
+  "two",
+  2345,
+  "and some other stuff here!!DSF",
+  "one",
+  "two",
+  2345,
+  "and some other dfsadfsdstuff here!!DSF",
+  "one",
+  "two",
+  2345,
+  "and some other sdfsadfsdtuff here!!DSF",
   "one",
   "two",
   2345,
@@ -25,7 +41,6 @@ const Choose = () => {
   const objectURL = useObjectURL(file);
 
   const onDrop = (files) => {
-    console.log(files);
     setFile(files[0]);
   };
 
@@ -35,20 +50,26 @@ const Choose = () => {
     noKeyboard: true,
   });
 
+  const className = [isDragActive && "dragging", "container"]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <main {...getRootProps()} className={isDragActive ? "dragging" : ""}>
+    <div {...getRootProps()} className={className}>
       <header>
-        <h1>Hex</h1>
-        {file && (
-          <>
-            <p>{file.name}</p>
-            <p>
-              <a href={objectURL} download={file.name}>
-                ↓
-              </a>
-            </p>
-          </>
-        )}
+        <div>
+          <h1>Hex</h1>
+          {file && (
+            <>
+              <p>{file.name}</p>
+              <p>
+                <a href={objectURL} download={file.name}>
+                  ↓
+                </a>
+              </p>
+            </>
+          )}
+        </div>
       </header>
 
       <input {...getInputProps()} />
@@ -74,6 +95,6 @@ const Choose = () => {
       <section id="buffer">
         <h2>buffer</h2>
       </section> */}
-    </main>
+    </div>
   );
 };

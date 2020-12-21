@@ -16,52 +16,45 @@ export const Hex = ({ blob }) => {
   const bytesPerRow = sm ? 8 : md ? 12 : lg ? 16 : 32;
 
   const view = new DataView(buffer);
-  const rows = Math.ceil(view.byteLength / bytesPerRow);
+  const size = Math.ceil(view.byteLength / bytesPerRow);
 
   const parentRef = React.useRef();
 
-  const rowVirtualizer = useVirtual({
-    size: rows,
+  const { totalSize, virtualItems } = useVirtual({
+    size,
     parentRef,
     estimateSize: React.useCallback(() => 20, []),
+    paddingEnd: 20,
     overscan: 5,
   });
 
   return (
-    <>
+    <main ref={parentRef}>
       <div
-        ref={parentRef}
         style={{
-          overflow: "auto",
+          height: `${totalSize}px`,
+          position: "relative",
         }}
       >
-        <div
-          style={{
-            height: `${rowVirtualizer.totalSize}px`,
-            position: "relative",
-          }}
-        >
-          {rowVirtualizer.virtualItems.map((virtualRow) => (
-            <div
-              key={virtualRow.index}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-
-                transform: `translateY(${virtualRow.start}px)`,
-              }}
-            >
-              <Row
-                index={virtualRow.index}
-                buffer={buffer}
-                bytesPerRow={bytesPerRow}
-              />
-            </div>
-          ))}
-        </div>
+        {virtualItems.map((virtualRow) => (
+          <div
+            key={virtualRow.index}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              transform: `translateY(${virtualRow.start}px)`,
+            }}
+          >
+            <Row
+              index={virtualRow.index}
+              buffer={buffer}
+              bytesPerRow={bytesPerRow}
+            />
+          </div>
+        ))}
       </div>
-    </>
+    </main>
   );
 };
 
