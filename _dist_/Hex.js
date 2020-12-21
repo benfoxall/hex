@@ -10,25 +10,23 @@ export const Hex = ({blob}) => {
   const lg = useMedia("(max-width: 1400px)");
   const bytesPerRow = sm ? 8 : md ? 12 : lg ? 16 : 32;
   const view = new DataView(buffer);
-  const rows = Math.ceil(view.byteLength / bytesPerRow);
+  const size = Math.ceil(view.byteLength / bytesPerRow);
   const parentRef = React.useRef();
-  const rowVirtualizer = useVirtual({
-    size: rows,
+  const {totalSize, virtualItems} = useVirtual({
+    size,
     parentRef,
     estimateSize: React.useCallback(() => 20, []),
+    paddingEnd: 20,
     overscan: 5
   });
-  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
-    ref: parentRef,
-    style: {
-      overflow: "auto"
-    }
+  return /* @__PURE__ */ React.createElement("main", {
+    ref: parentRef
   }, /* @__PURE__ */ React.createElement("div", {
     style: {
-      height: `${rowVirtualizer.totalSize}px`,
+      height: `${totalSize}px`,
       position: "relative"
     }
-  }, rowVirtualizer.virtualItems.map((virtualRow) => /* @__PURE__ */ React.createElement("div", {
+  }, virtualItems.map((virtualRow) => /* @__PURE__ */ React.createElement("div", {
     key: virtualRow.index,
     style: {
       position: "absolute",
@@ -40,7 +38,7 @@ export const Hex = ({blob}) => {
     index: virtualRow.index,
     buffer,
     bytesPerRow
-  }))))));
+  })))));
 };
 const Row = memo(({index, buffer, bytesPerRow}) => {
   const byteOffset = index * bytesPerRow;
