@@ -1,30 +1,25 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, memo } from "react";
 import { Hex } from "./Hex";
 import { useDropzone } from "react-dropzone";
 
-const blob = new Blob([
-  "one",
-  "two",
-  2345,
-  "and some other szfsdfdsafds!!DSF",
-  "one",
-  "two",
-  2345,
-  "and some other stuff here!!DSF",
-  "one",
-  "two",
-  2345,
-  "and some other dfsadfsdstuff here!!DSF",
-  "one",
-  "two",
-  2345,
-  "and some other sdfsadfsdtuff here!!DSF",
-  "one",
-  "two",
-  2345,
-  "and some other stuff here!!DSF",
-  234,
-]);
+const testfile = new File(
+  [
+    "one",
+    "two",
+    2345,
+    "and some other szfsdfdsafds!!DSF",
+    "one",
+    "two",
+    2345,
+    "and some other sdfsadfsdtuff here!!DSF",
+    "one",
+    "two",
+    2345,
+    "and some other stuff here!!DSF",
+    234,
+  ],
+  "test-file.fob"
+);
 
 export const App = () => <Choose />;
 
@@ -37,8 +32,9 @@ const useObjectURL = (blob) => {
 };
 
 const Choose = () => {
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(testfile);
   const objectURL = useObjectURL(file);
+  const close = () => setFile(void 0);
 
   const onDrop = (files) => {
     setFile(files[0]);
@@ -61,12 +57,22 @@ const Choose = () => {
           <h1>Hex</h1>
           {file && (
             <>
-              <p>{file.name}</p>
               <p>
-                <a href={objectURL} download={file.name}>
+                {file.name} <Size bytes={file.size} />
+              </p>
+              <nav>
+                <a
+                  href={objectURL}
+                  download={file.name}
+                  title="Download content"
+                >
                   ↓
                 </a>
-              </p>
+
+                <button onClick={close} title="Close file">
+                  ⨯
+                </button>
+              </nav>
             </>
           )}
         </div>
@@ -74,7 +80,7 @@ const Choose = () => {
 
       <input {...getInputProps()} />
 
-      {file && <Hex blob={file || blob} />}
+      {file && <Hex blob={file} />}
       {/* 
       <p>
         <a onClick={open}>open file</a>
@@ -98,3 +104,22 @@ const Choose = () => {
     </div>
   );
 };
+
+const units = ["byte", "kilobyte", "megabyte", "gigabyte"];
+const Size = memo(({ bytes }) => {
+  let s = bytes;
+
+  for (const unit of units) {
+    if (s < 750) {
+      return new Intl.NumberFormat("en", {
+        style: "unit",
+        unitDisplay: "narrow",
+        unit,
+      }).format(Math.round(s));
+    }
+
+    s /= 1000;
+  }
+
+  return "huge";
+});
