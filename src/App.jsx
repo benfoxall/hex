@@ -15,6 +15,30 @@ const testfile = new File(
     "one",
     "two",
     2345,
+    "and some other szfsdfdsafds!!DSF",
+    "one",
+    "two",
+    2345,
+    "and some other sdfsadfsdtuff here!!DSF",
+    "one",
+    "two",
+    2345,
+    "and some other szfsdfdsafds!!DSF",
+    "one",
+    "two",
+    2345,
+    "and some other sdfsadfsdtuff here!!DSF",
+    "one",
+    "two",
+    2345,
+    "and some other szfsdfdsafds!!DSF",
+    "one",
+    "two",
+    2345,
+    "and some other sdfsadfsdtuff here!!DSF",
+    "one",
+    "two",
+    2345,
     "and some other stuff here!!DSF",
     234,
   ],
@@ -46,12 +70,13 @@ const Choose = () => {
     noKeyboard: true,
   });
 
-  const className = [isDragActive && "dragging", "container"]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <div {...getRootProps()} className={className}>
+    <div
+      {...getRootProps()}
+      className={`draggable ${isDragActive ? "active" : ""}`}
+    >
+      <input {...getInputProps()} />
+
       <header>
         <div>
           <h1>Hex</h1>
@@ -77,8 +102,6 @@ const Choose = () => {
           )}
         </div>
       </header>
-
-      <input {...getInputProps()} />
 
       {file && <Hex blob={file} />}
       {/* 
