@@ -53,16 +53,23 @@ const useObjectURL = (blob) => {
   return url;
 };
 
-const ex = `
-hex = window.open("http://localhost:8080/", 'hex', 'width=300');
+// use a link element to get the full href
+const help = document.createElement("a");
+help.href = "help.js";
 
-hex.postMessage(new Uint8Array([1,2,3,4]), '*');
+const ex = `
+const hex = await import(${JSON.stringify(help.href)})
+
+hex.view(new Uint8Array([1, 2, 3, 4]))
 `;
 
 export const App = () => {
   const [file, setFile] = useState();
   const objectURL = useObjectURL(file);
   const close = () => setFile(void 0);
+
+  const [shown, setShown] = useState(false);
+  const toggleJS = () => setShown((x) => !x);
 
   const onDrop = (files) => {
     setFile(files[0]);
@@ -85,6 +92,11 @@ export const App = () => {
       }
     };
     window.addEventListener("message", listen);
+
+    if (window.opener) {
+      window.opener.postMessage("ready", "*");
+    }
+
     return () => {
       window.removeEventListener("message", listen);
     };
@@ -139,12 +151,15 @@ export const App = () => {
             <li>
               <a onClick={open}>Select a local file</a>
             </li>
-            <li>Post an ArrayBuffer</li>
+            <li>
+              <a onClick={toggleJS}>Send from JS</a>
+            </li>
           </ul>
-
-          <code>
-            <pre>{ex}</pre>
-          </code>
+          {toggleJS && (
+            <code>
+              <pre>{ex}</pre>
+            </code>
+          )}
         </section>
       )}
     </div>

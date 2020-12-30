@@ -13,6 +13,11 @@ body {
   width: 100vw;
 }
 
+code {
+  font-size: 0.6em;
+  color: #f08;
+}
+
 h1 {
   font-weight: 100;
   margin: 0;
