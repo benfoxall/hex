@@ -45,8 +45,6 @@ const testfile = new File(
   "test-file.fob"
 );
 
-export const App = () => <Choose />;
-
 const useObjectURL = (blob) => {
   const url = useMemo(() => blob && URL.createObjectURL(blob), [blob]);
 
@@ -55,14 +53,42 @@ const useObjectURL = (blob) => {
   return url;
 };
 
-const Choose = () => {
-  const [file, setFile] = useState(testfile);
+const ex = `
+hex = window.open("http://localhost:8080/", 'hex', 'width=300');
+
+hex.postMessage(new Uint8Array([1,2,3,4]), '*');
+`;
+
+export const App = () => {
+  const [file, setFile] = useState();
   const objectURL = useObjectURL(file);
   const close = () => setFile(void 0);
 
   const onDrop = (files) => {
     setFile(files[0]);
   };
+
+  useEffect(() => {
+    const listen = (e) => {
+      console.log(e);
+      const data = e.data;
+
+      const ab =
+        data instanceof ArrayBuffer
+          ? data
+          : data.buffer instanceof ArrayBuffer
+          ? data.buffer
+          : null;
+
+      if (ab) {
+        setFile(new File([ab], `${e.origin}.data`));
+      }
+    };
+    window.addEventListener("message", listen);
+    return () => {
+      window.removeEventListener("message", listen);
+    };
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
@@ -91,11 +117,11 @@ const Choose = () => {
                   download={file.name}
                   title="Download content"
                 >
-                  ↓
+                  ↓ Save
                 </a>
 
                 <button onClick={close} title="Close file">
-                  ⨯
+                  Close
                 </button>
               </nav>
             </>
@@ -103,27 +129,24 @@ const Choose = () => {
         </div>
       </header>
 
-      {file && <Hex blob={file} />}
-      {/* 
-      <p>
-        <a onClick={open}>open file</a>
-      </p> */}
-      {/* 
-      <p>
-        View content of a{" "}
-        <a href="#!" onClick={open}>
-          file
-        </a>
-        , <a href="#url">url</a> or <a href="#buffer">ArrayBuffer</a>
-      </p>
+      {file ? (
+        <Hex blob={file} />
+      ) : (
+        <section className="info">
+          <p>A viewer for binary data</p>
 
-      <section id="url">
-        <h2>url</h2>
-      </section>
+          <ul>
+            <li>
+              <a onClick={open}>Select a local file</a>
+            </li>
+            <li>Post an ArrayBuffer</li>
+          </ul>
 
-      <section id="buffer">
-        <h2>buffer</h2>
-      </section> */}
+          <code>
+            <pre>{ex}</pre>
+          </code>
+        </section>
+      )}
     </div>
   );
 };

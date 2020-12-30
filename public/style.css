@@ -6,7 +6,7 @@ body {
 
 body {
   font-family: monospace;
-  background: #222;
+  background: #2a333c;
   color: #fff;
 
   height: 100vh;
@@ -91,17 +91,19 @@ nav {
 nav button,
 nav a {
   border: none;
+  font-family: inherit;
   background: inherit;
   color: inherit;
   padding: 0.5em;
   cursor: pointer;
+  text-decoration: underline;
 }
 
 main {
   overflow: auto;
-  /* position: absolute; */
-  /* top: 4em;
-  left: 0;
-  bottom: 0;
-  right: 0; */
+}
+
+.info {
+  padding: 2em;
+  font-size: 2em;
 }
