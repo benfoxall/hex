@@ -19,15 +19,12 @@
   },
   "homepage": "https://github.com/benfoxall/hex#readme",
   "devDependencies": {
-    "snowpack": "^2.18.1"
+    "snowpack": "^2.18.5"
   },
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
-    "react-tiny-virtual-list": "^2.2.0",
-    "react-virtual": "^2.3.2",
-    "react-virtualized-auto-sizer": "^1.0.2",
-    "react-window": "^1.8.6"
+    "react-virtual": "^2.3.2"
   }
 }
