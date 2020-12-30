@@ -57,11 +57,9 @@ const useObjectURL = (blob) => {
 const help = document.createElement("a");
 help.href = "help.js";
 
-const ex = `
-const hex = await import(${JSON.stringify(help.href)})
+const ex = `const hex = await import(${JSON.stringify(help.href)})
 
-hex.view(new Uint8Array([1, 2, 3, 4]))
-`;
+hex.view(new Uint8Array([1, 2, 3, 4]))`;
 
 export const App = () => {
   const [file, setFile] = useState();
@@ -149,13 +147,13 @@ export const App = () => {
 
           <ul>
             <li>
-              <a onClick={open}>Select a local file</a>
+              <a onClick={open} href="#">Select a local file</a>
             </li>
             <li>
-              <a onClick={toggleJS}>Send from JS</a>
+              <a onClick={toggleJS} href="#">Send from JS</a>
             </li>
           </ul>
-          {toggleJS && (
+          {shown && (
             <code>
               <pre>{ex}</pre>
             </code>
