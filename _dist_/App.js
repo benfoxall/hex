@@ -45,15 +45,19 @@ const useObjectURL = (blob) => {
   useEffect(() => () => url && URL.revokeObjectURL(url), [url]);
   return url;
 };
+const help = document.createElement("a");
+help.href = "help.js";
 const ex = `
-hex = window.open("http://localhost:8080/", 'hex', 'width=300');
+const hex = await import(${JSON.stringify(help.href)})
 
-hex.postMessage(new Uint8Array([1,2,3,4]), '*');
+hex.view(new Uint8Array([1, 2, 3, 4]))
 `;
 export const App = () => {
   const [file, setFile] = useState();
   const objectURL = useObjectURL(file);
   const close = () => setFile(void 0);
+  const [shown, setShown] = useState(false);
+  const toggleJS = () => setShown((x) => !x);
   const onDrop = (files) => {
     setFile(files[0]);
   };
@@ -67,6 +71,9 @@ export const App = () => {
       }
     };
     window.addEventListener("message", listen);
+    if (window.opener) {
+      window.opener.postMessage("ready", "*");
+    }
     return () => {
       window.removeEventListener("message", listen);
     };
@@ -96,7 +103,9 @@ export const App = () => {
     className: "info"
   }, /* @__PURE__ */ React.createElement("p", null, "A viewer for binary data"), /* @__PURE__ */ React.createElement("ul", null, /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
     onClick: open
-  }, "Select a local file")), /* @__PURE__ */ React.createElement("li", null, "Post an ArrayBuffer")), /* @__PURE__ */ React.createElement("code", null, /* @__PURE__ */ React.createElement("pre", null, ex))));
+  }, "Select a local file")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
+    onClick: toggleJS
+  }, "Send from JS"))), toggleJS && /* @__PURE__ */ React.createElement("code", null, /* @__PURE__ */ React.createElement("pre", null, ex))));
 };
 const units = ["byte", "kilobyte", "megabyte", "gigabyte"];
 const Size = memo(({bytes}) => {
