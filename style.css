@@ -13,9 +13,12 @@ body {
   width: 100vw;
 }
 
-code {
+code pre {
   font-size: 0.6em;
-  color: #f08;
+  background-color: rgba(1, 1, 1, 0.4);
+  display: block;
+  padding: 1em;
+  white-space: pre-wrap;
 }
 
 h1 {

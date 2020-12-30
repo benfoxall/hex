@@ -47,11 +47,9 @@ const useObjectURL = (blob) => {
 };
 const help = document.createElement("a");
 help.href = "help.js";
-const ex = `
-const hex = await import(${JSON.stringify(help.href)})
+const ex = `const hex = await import(${JSON.stringify(help.href)})
 
-hex.view(new Uint8Array([1, 2, 3, 4]))
-`;
+hex.view(new Uint8Array([1, 2, 3, 4]))`;
 export const App = () => {
   const [file, setFile] = useState();
   const objectURL = useObjectURL(file);
@@ -102,10 +100,12 @@ export const App = () => {
   }) : /* @__PURE__ */ React.createElement("section", {
     className: "info"
   }, /* @__PURE__ */ React.createElement("p", null, "A viewer for binary data"), /* @__PURE__ */ React.createElement("ul", null, /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
-    onClick: open
+    onClick: open,
+    href: "#"
   }, "Select a local file")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
-    onClick: toggleJS
-  }, "Send from JS"))), toggleJS && /* @__PURE__ */ React.createElement("code", null, /* @__PURE__ */ React.createElement("pre", null, ex))));
+    onClick: toggleJS,
+    href: "#"
+  }, "Send from JS"))), shown && /* @__PURE__ */ React.createElement("code", null, /* @__PURE__ */ React.createElement("pre", null, ex))));
 };
 const units = ["byte", "kilobyte", "megabyte", "gigabyte"];
 const Size = memo(({bytes}) => {
