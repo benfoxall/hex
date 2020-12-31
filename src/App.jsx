@@ -55,7 +55,7 @@ const useObjectURL = (blob) => {
 
 // use a link element to get the full href
 const help = document.createElement("a");
-help.href = "help.js";
+help.href = "h.js";
 
 const ex = `const hex = await import(${JSON.stringify(help.href)})
 
@@ -147,10 +147,14 @@ export const App = () => {
 
           <ul>
             <li>
-              <a onClick={open} href="#">Select a local file</a>
+              <a onClick={open} href="#">
+                Select a local file
+              </a>
             </li>
             <li>
-              <a onClick={toggleJS} href="#">Send from JS</a>
+              <a onClick={toggleJS} href="#">
+                Send from JS
+              </a>
             </li>
           </ul>
           {shown && (

@@ -5,7 +5,7 @@
 */
 
 // Find the page path
-const url = new URL(import.meta.url.replace(/help\.js$/, ""));
+const url = new URL(import.meta.url.replace(/h\.js$/, ""));
 
 let hex = null;
 
