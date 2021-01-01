@@ -5,29 +5,31 @@ body {
 }
 
 body {
-  font-family: monospace;
+  font-family: "IBM Plex Mono", monospace;
   background: #2a333c;
   color: #fff;
 
   height: 100vh;
   width: 100vw;
+  font-weight: 300;
 }
 
-code pre {
-  font-size: 0.6em;
-  background-color: rgba(1, 1, 1, 0.4);
-  display: block;
-  padding: 1em;
-  white-space: pre-wrap;
+li {
+  list-style: none;
+}
+li:before {
+  content: "-";
+  padding-right: 5px;
 }
 
 h1 {
   font-weight: 100;
+  font-style: italic;
   margin: 0;
 }
 
 .draggable {
-  transition: 0.5s;
+  transition: background-color 0.53s, box-shadow 0.5s;
   box-shadow: inset aquamarine 0px 0px 0px 0px;
   height: 100vh;
   width: 100vw;
@@ -41,8 +43,16 @@ h1 {
   box-shadow: inset rgb(247, 0, 255, 0.7) 0px 1px 0px 50px;
 }
 
-a {
+a,
+button {
   color: aquamarine;
+  text-decoration: none;
+}
+a:hover,
+a:focus,
+button:hover,
+button:focus {
+  font-weight: 800;
 }
 
 .row {
@@ -104,7 +114,9 @@ nav a {
   color: inherit;
   padding: 0.5em;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: inherit;
 }
 
 main {
@@ -114,4 +126,28 @@ main {
 .info {
   padding: 2em;
   font-size: 2em;
+}
+
+.hljs {
+  font-size: 0.5em;
+  color: #fff;
+  font-weight: 100;
+  font-family: "IBM Plex Mono", monospace;
+  background-color: rgba(1, 1, 1, 0.4);
+  display: inline-block;
+  padding: 1em;
+  white-space: pre-wrap;
+  border-radius: 5px;
+}
+.hljs-keyword {
+  color: rgb(255, 221, 128);
+}
+.hljs-string {
+  color: rgb(185, 255, 128);
+}
+.hljs-built_in {
+  color: rgb(128, 240, 255);
+}
+.hljs-number {
+  color: rgb(172, 128, 255);
 }
