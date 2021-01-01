@@ -1,7 +1,7 @@
 {
   "inputs": {
     "style.css": {
-      "bytes": 2029,
+      "bytes": 2050,
       "imports": []
     },
     "web_modules/common/index-0ff745df.js": {
@@ -52,7 +52,7 @@
       ]
     },
     "_dist_/Hex.js": {
-      "bytes": 2449,
+      "bytes": 2452,
       "imports": [
         {
           "path": "web_modules/react.js"
@@ -113,10 +113,10 @@
       "imports": [],
       "inputs": {
         "style.css": {
-          "bytesInOutput": 1507
+          "bytesInOutput": 1520
         }
       },
-      "bytes": 1508
+      "bytes": 1521
     },
     "../node_modules/.cache/snowpack/~~bundle~~/_dist_/index.js": {
       "imports": [],
@@ -141,7 +141,7 @@
           "bytesInOutput": 4393
         },
         "_dist_/Hex.js": {
-          "bytesInOutput": 1227
+          "bytesInOutput": 1230
         },
         "_dist_/Usage.js": {
           "bytesInOutput": 826
@@ -153,7 +153,7 @@
           "bytesInOutput": 61
         }
       },
-      "bytes": 157974
+      "bytes": 157977
     }
   }
 }
