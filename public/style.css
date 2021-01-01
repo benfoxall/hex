@@ -14,6 +14,9 @@ body {
   font-weight: 300;
 }
 
+ul {
+  padding: 0;
+}
 li {
   list-style: none;
 }
@@ -124,7 +127,7 @@ main {
 }
 
 .info {
-  padding: 2em;
+  padding: 1em;
   font-size: 2em;
 }
 
