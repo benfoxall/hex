@@ -52,7 +52,7 @@
       ]
     },
     "_dist_/Hex.js": {
-      "bytes": 2452,
+      "bytes": 2421,
       "imports": [
         {
           "path": "web_modules/react.js"
@@ -74,7 +74,7 @@
       ]
     },
     "_dist_/App.js": {
-      "bytes": 3296,
+      "bytes": 3305,
       "imports": [
         {
           "path": "web_modules/react.js"
@@ -141,13 +141,13 @@
           "bytesInOutput": 4393
         },
         "_dist_/Hex.js": {
-          "bytesInOutput": 1230
+          "bytesInOutput": 1221
         },
         "_dist_/Usage.js": {
           "bytesInOutput": 826
         },
         "_dist_/App.js": {
-          "bytesInOutput": 1714
+          "bytesInOutput": 1723
         },
         "_dist_/index.js": {
           "bytesInOutput": 61
