@@ -9,7 +9,7 @@ export const Hex = ({ blob }) => {
     blob.arrayBuffer().then(setBuffer);
   }, [blob]);
 
-  const sm = useMedia("(max-width: 600px)");
+  const sm = useMedia("(max-width: 800px)");
   const md = useMedia("(max-width: 800px)");
   const lg = useMedia("(max-width: 1400px)");
 
@@ -88,12 +88,12 @@ const HexPairs = ({ u8, size }) => {
   return str.padEnd(size * 3 - 1, "_");
 };
 
-const whitespace = /[ \n]/g;
-
-const Ascii = ({ u8, size }) => {
-  const str = u8.reduce((acc, value) => {
-    return acc + String.fromCharCode(value);
-  }, "");
-
-  return str.replace(whitespace, "·");
-};
+const Ascii = ({ u8 }) =>
+  Array.from(u8, (value) =>
+    value < 33 ||
+    value == 0x7f ||
+    value === 173 ||
+    (value >= 129 && value <= 159)
+      ? "."
+      : String.fromCharCode(value)
+  ).join("");

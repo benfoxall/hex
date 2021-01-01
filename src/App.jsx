@@ -5,6 +5,8 @@ import { Hex } from "./Hex";
 import { Usage } from "./Usage";
 import { ByteSize, useObjectURL } from "./util";
 
+// const d = new File([Uint8Array.from({ length: 256 }, (_, i) => i)], "dev.data");
+
 export const App = () => {
   const [file, setFile] = useState();
   const objectURL = useObjectURL(file);
@@ -96,7 +98,7 @@ export const App = () => {
       ) : (
         window.opener === null && (
           <section className="info">
-            <p>A browser-based hex viewer</p>
+            <p>Another online hex viewer</p>
 
             <ul>
               <li>
@@ -106,25 +108,24 @@ export const App = () => {
               </li>
               <li>
                 <a onClick={toggleShowUsage} href="#">
-                  Send a JS Buffer
-                </a>
-              </li>
-              <li>
-                Demo:{" "}
-                <a onClick={demo} name="index.html" href=".">
-                  html
-                </a>{" "}
-                <a
-                  onClick={demo}
-                  name="example.gif"
-                  href="https://benjaminbenben.com/img/example.gif"
-                >
-                  gif
+                  From your JS ✨
                 </a>
               </li>
             </ul>
-
             {showUsage && <Usage />}
+            <p>
+              Sample files:{" "}
+              <a onClick={demo} name="index.html" href=".">
+                html
+              </a>{" "}
+              <a
+                onClick={demo}
+                name="example.gif"
+                href="https://benjaminbenben.com/img/example.gif"
+              >
+                gif
+              </a>
+            </p>
           </section>
         )
       )}
