@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState, memo } from "react";
-import { Hex } from "./Hex";
 import { useDropzone } from "react-dropzone";
+
+import { Hex } from "./Hex";
+import { Usage } from "./Usage";
 
 const testfile = new File(
   [
@@ -53,21 +55,13 @@ const useObjectURL = (blob) => {
   return url;
 };
 
-// use a link element to get the full href
-const help = document.createElement("a");
-help.href = "h.js";
-
-const ex = `const hex = await import(${JSON.stringify(help.href)})
-
-hex.view(new Uint8Array([1, 2, 3, 4]))`;
-
 export const App = () => {
   const [file, setFile] = useState();
   const objectURL = useObjectURL(file);
   const close = () => setFile(void 0);
 
-  const [shown, setShown] = useState(false);
-  const toggleJS = () => setShown((x) => !x);
+  const [showUsage, setShowUsage] = useState(false);
+  const toggleShowUsage = (e) => setShowUsage((x) => !x);
 
   const onDrop = (files) => {
     setFile(files[0]);
@@ -106,6 +100,15 @@ export const App = () => {
     noKeyboard: true,
   });
 
+  const demo = (e) => {
+    e.preventDefault();
+    console.log(e);
+    fetch(e.target.href)
+      .then((res) => res.arrayBuffer())
+      .then((buff) => new File([buff], e.target.name))
+      .then(setFile);
+  };
+
   return (
     <div
       {...getRootProps()}
@@ -143,25 +146,35 @@ export const App = () => {
         <Hex blob={file} />
       ) : (
         <section className="info">
-          <p>A viewer for binary data</p>
+          <p>A browser-based hex viewer</p>
 
           <ul>
             <li>
               <a onClick={open} href="#">
-                Select a local file
+                Choose a file
               </a>
             </li>
             <li>
-              <a onClick={toggleJS} href="#">
-                Send from JS
+              <a onClick={toggleShowUsage} href="#">
+                Send a JS Buffer
+              </a>
+            </li>
+            <li>
+              Demo:{" "}
+              <a onClick={demo} name="index.html" href=".">
+                html
+              </a>{" "}
+              <a
+                onClick={demo}
+                name="example.gif"
+                href="https://benjaminbenben.com/img/example.gif"
+              >
+                gif
               </a>
             </li>
           </ul>
-          {shown && (
-            <code>
-              <pre>{ex}</pre>
-            </code>
-          )}
+
+          {showUsage && <Usage />}
         </section>
       )}
     </div>
