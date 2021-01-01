@@ -35,6 +35,14 @@
         }
       ]
     },
+    "_dist_/util.js": {
+      "bytes": 1017,
+      "imports": [
+        {
+          "path": "web_modules/react.js"
+        }
+      ]
+    },
     "web_modules/react-virtual.js": {
       "bytes": 11941,
       "imports": [
@@ -44,10 +52,13 @@
       ]
     },
     "_dist_/Hex.js": {
-      "bytes": 2787,
+      "bytes": 2449,
       "imports": [
         {
           "path": "web_modules/react.js"
+        },
+        {
+          "path": "_dist_/util.js"
         },
         {
           "path": "web_modules/react-virtual.js"
@@ -63,7 +74,7 @@
       ]
     },
     "_dist_/App.js": {
-      "bytes": 4463,
+      "bytes": 3296,
       "imports": [
         {
           "path": "web_modules/react.js"
@@ -76,6 +87,9 @@
         },
         {
           "path": "_dist_/Usage.js"
+        },
+        {
+          "path": "_dist_/util.js"
         }
       ]
     },
@@ -120,23 +134,26 @@
         "web_modules/react-dropzone.js": {
           "bytesInOutput": 17037
         },
+        "_dist_/util.js": {
+          "bytesInOutput": 517
+        },
         "web_modules/react-virtual.js": {
           "bytesInOutput": 4393
         },
         "_dist_/Hex.js": {
-          "bytesInOutput": 1416
+          "bytesInOutput": 1227
         },
         "_dist_/Usage.js": {
           "bytesInOutput": 826
         },
         "_dist_/App.js": {
-          "bytesInOutput": 2578
+          "bytesInOutput": 1714
         },
         "_dist_/index.js": {
           "bytesInOutput": 61
         }
       },
-      "bytes": 158510
+      "bytes": 157974
     }
   }
 }
