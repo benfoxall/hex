@@ -1,59 +1,9 @@
-import React, { useEffect, useMemo, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { Hex } from "./Hex";
 import { Usage } from "./Usage";
-
-const testfile = new File(
-  [
-    "one",
-    "two",
-    2345,
-    "and some other szfsdfdsafds!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other sdfsadfsdtuff here!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other szfsdfdsafds!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other sdfsadfsdtuff here!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other szfsdfdsafds!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other sdfsadfsdtuff here!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other szfsdfdsafds!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other sdfsadfsdtuff here!!DSF",
-    "one",
-    "two",
-    2345,
-    "and some other stuff here!!DSF",
-    234,
-  ],
-  "test-file.fob"
-);
-
-const useObjectURL = (blob) => {
-  const url = useMemo(() => blob && URL.createObjectURL(blob), [blob]);
-
-  useEffect(() => () => url && URL.revokeObjectURL(url), [url]);
-
-  return url;
-};
+import { ByteSize, useObjectURL } from "./util";
 
 export const App = () => {
   const [file, setFile] = useState();
@@ -102,7 +52,6 @@ export const App = () => {
 
   const demo = (e) => {
     e.preventDefault();
-    console.log(e);
     fetch(e.target.href)
       .then((res) => res.arrayBuffer())
       .then((buff) => new File([buff], e.target.name))
@@ -122,7 +71,7 @@ export const App = () => {
           {file && (
             <>
               <p>
-                {file.name} <Size bytes={file.size} />
+                {file.name} <ByteSize bytes={file.size} />
               </p>
               <nav>
                 <a
@@ -182,22 +131,3 @@ export const App = () => {
     </div>
   );
 };
-
-const units = ["byte", "kilobyte", "megabyte", "gigabyte"];
-const Size = memo(({ bytes }) => {
-  let s = bytes;
-
-  for (const unit of units) {
-    if (s < 750) {
-      return new Intl.NumberFormat("en", {
-        style: "unit",
-        unitDisplay: "narrow",
-        unit,
-      }).format(Math.round(s));
-    }
-
-    s /= 1000;
-  }
-
-  return "huge";
-});
