@@ -58,7 +58,15 @@ const useObjectURL = (blob) => {
 export const App = () => {
   const [file, setFile] = useState();
   const objectURL = useObjectURL(file);
-  const close = () => setFile(void 0);
+  const close = () => {
+    setFile(void 0);
+
+    // close the window if it was openned by script
+    // fixme:? check if target="foo"
+    if (window.opener !== null) {
+      window.close();
+    }
+  };
 
   const [showUsage, setShowUsage] = useState(false);
   const toggleShowUsage = (e) => setShowUsage((x) => !x);
@@ -69,18 +77,10 @@ export const App = () => {
 
   useEffect(() => {
     const listen = (e) => {
-      console.log(e);
-      const data = e.data;
-
-      const ab =
-        data instanceof ArrayBuffer
-          ? data
-          : data.buffer instanceof ArrayBuffer
-          ? data.buffer
-          : null;
-
-      if (ab) {
-        setFile(new File([ab], `${e.origin}.data`));
+      if (e.data instanceof ArrayBuffer) {
+        setFile(new File([e.data], `${e.origin}.data`));
+      } else {
+        console.warn("Unhandled messsage", e.data);
       }
     };
     window.addEventListener("message", listen);
@@ -145,37 +145,39 @@ export const App = () => {
       {file ? (
         <Hex blob={file} />
       ) : (
-        <section className="info">
-          <p>A browser-based hex viewer</p>
+        window.opener === null && (
+          <section className="info">
+            <p>A browser-based hex viewer</p>
 
-          <ul>
-            <li>
-              <a onClick={open} href="#">
-                Choose a file
-              </a>
-            </li>
-            <li>
-              <a onClick={toggleShowUsage} href="#">
-                Send a JS Buffer
-              </a>
-            </li>
-            <li>
-              Demo:{" "}
-              <a onClick={demo} name="index.html" href=".">
-                html
-              </a>{" "}
-              <a
-                onClick={demo}
-                name="example.gif"
-                href="https://benjaminbenben.com/img/example.gif"
-              >
-                gif
-              </a>
-            </li>
-          </ul>
+            <ul>
+              <li>
+                <a onClick={open} href="#">
+                  Choose a file
+                </a>
+              </li>
+              <li>
+                <a onClick={toggleShowUsage} href="#">
+                  Send a JS Buffer
+                </a>
+              </li>
+              <li>
+                Demo:{" "}
+                <a onClick={demo} name="index.html" href=".">
+                  html
+                </a>{" "}
+                <a
+                  onClick={demo}
+                  name="example.gif"
+                  href="https://benjaminbenben.com/img/example.gif"
+                >
+                  gif
+                </a>
+              </li>
+            </ul>
 
-          {showUsage && <Usage />}
-        </section>
+            {showUsage && <Usage />}
+          </section>
+        )
       )}
     </div>
   );

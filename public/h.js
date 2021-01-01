@@ -19,7 +19,8 @@ async function popup() {
   // wait until we've heard something back
   await new Promise((resolve) => {
     const listen = (e) => {
-      if (e.origin === url.origin) {
+      if (e.origin === url.origin && e.data === "ready") {
+        console.log("READY");
         window.removeEventListener("message", listen);
         resolve();
       }
@@ -28,9 +29,25 @@ async function popup() {
   });
 }
 
+function toBuffer(any) {
+  if (any instanceof ArrayBuffer) {
+    return any;
+  }
+  if (any.buffer instanceof ArrayBuffer) {
+    return any.buffer;
+  }
+  if (typeof any === "string") {
+    return new TextEncoder().encode(any).buffer;
+  }
+
+  throw new Error("Data must be: ArrayBuffer, TypedArray, or String");
+}
+
 export async function view(data) {
+  const buffer = toBuffer(data);
+
   await popup();
 
-  hex.postMessage(data, "*");
+  hex.postMessage(buffer, url.origin);
   hex.focus();
 }
