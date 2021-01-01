@@ -1,8 +1,0 @@
-{
-  "imports": {
-    "react": "./react.js",
-    "react-dom": "./react-dom.js",
-    "react-dropzone": "./react-dropzone.js",
-    "react-virtual": "./react-virtual.js"
-  }
-}
