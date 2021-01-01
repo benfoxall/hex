@@ -88,7 +88,7 @@ const HexPairs = ({ u8, size }) => {
   return str.padEnd(size * 3 - 1, "_");
 };
 
-const whitespace = /\W/g;
+const whitespace = /[ \n]/g;
 
 const Ascii = ({ u8, size }) => {
   const str = u8.reduce((acc, value) => {
