@@ -82,7 +82,7 @@
       ]
     },
     "_dist_/App.js": {
-      "bytes": 3305,
+      "bytes": 3310,
       "imports": [
         {
           "path": "web_modules/react.js"
@@ -167,13 +167,13 @@
           "bytesInOutput": 826
         },
         "_dist_/App.js": {
-          "bytesInOutput": 1722
+          "bytesInOutput": 1727
         },
         "_dist_/index.js": {
           "bytesInOutput": 172
         }
       },
-      "bytes": 163404
+      "bytes": 163409
     }
   }
 }
