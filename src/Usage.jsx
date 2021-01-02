@@ -1,7 +1,7 @@
 import React from "react";
 
 // use a link to get an absolute url to helper lib
-const help = Object.assign(document.createElement("a"), { href: "h.js" });
+const help = Object.assign(document.createElement("a"), { href: "popup.js" });
 
 const helperUrl = help.href;
 
