@@ -24,6 +24,7 @@
     "workbox-cli": "^6.0.2"
   },
   "dependencies": {
+    "pretty-bytes": "^5.5.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
