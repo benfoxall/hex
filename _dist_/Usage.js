@@ -3,9 +3,7 @@ const help = Object.assign(document.createElement("a"), {href: "h.js"});
 const helperUrl = help.href;
 export const Usage = () => /* @__PURE__ */ React.createElement("pre", {
   className: "hljs"
-}, /* @__PURE__ */ React.createElement("span", {
-  className: "hljs-keyword"
-}, "const"), " hex =", " ", /* @__PURE__ */ React.createElement("span", {
+}, "hex = ", /* @__PURE__ */ React.createElement("span", {
   className: "hljs-keyword"
 }, "await"), " ", /* @__PURE__ */ React.createElement("span", {
   className: "hljs-keyword"

@@ -66,7 +66,7 @@ export const App = () => {
   }, "Open a file")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
     onClick: toggleShowUsage,
     href: "#"
-  }, "Launch from your JS \u2728"))), showUsage && /* @__PURE__ */ React.createElement(Usage2, null), /* @__PURE__ */ React.createElement("p", null, "Sample files:", " ", /* @__PURE__ */ React.createElement("a", {
+  }, "Via browser console \u2728"))), showUsage && /* @__PURE__ */ React.createElement(Usage2, null), /* @__PURE__ */ React.createElement("p", null, "Sample files:", " ", /* @__PURE__ */ React.createElement("a", {
     onClick: demo,
     name: "index.html",
     href: "."
