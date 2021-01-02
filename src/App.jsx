@@ -103,12 +103,12 @@ export const App = () => {
             <ul>
               <li>
                 <a onClick={open} href="#">
-                  Choose a file
+                  Open a file
                 </a>
               </li>
               <li>
                 <a onClick={toggleShowUsage} href="#">
-                  From your JS ✨
+                  Launch from your JS ✨
                 </a>
               </li>
             </ul>
