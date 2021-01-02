@@ -31,7 +31,7 @@ export const App = () => {
     const listen = (e) => {
       if (e.data instanceof ArrayBuffer) {
         setFile(new File([e.data], `${e.origin}.data`));
-      } else {
+      } else if (e.data !== "ready") {
         console.warn("Unhandled messsage", e.data);
       }
     };
