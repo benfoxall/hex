@@ -108,7 +108,7 @@ export const App = () => {
               </li>
               <li>
                 <a onClick={toggleShowUsage} href="#">
-                  Launch from your JS ✨
+                  Via browser console ✨
                 </a>
               </li>
             </ul>
