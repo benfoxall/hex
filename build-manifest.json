@@ -4,6 +4,10 @@
       "bytes": 2050,
       "imports": []
     },
+    "__snowpack__/env.js": {
+      "bytes": 73,
+      "imports": []
+    },
     "web_modules/common/index-0ff745df.js": {
       "bytes": 9166,
       "imports": []
@@ -26,6 +30,10 @@
           "path": "web_modules/common/index-0ff745df.js"
         }
       ]
+    },
+    "web_modules/workbox-window.js": {
+      "bytes": 5300,
+      "imports": []
     },
     "web_modules/react-dropzone.js": {
       "bytes": 54130,
@@ -94,13 +102,19 @@
       ]
     },
     "_dist_/index.js": {
-      "bytes": 225,
+      "bytes": 506,
       "imports": [
+        {
+          "path": "__snowpack__/env.js"
+        },
         {
           "path": "web_modules/react.js"
         },
         {
           "path": "web_modules/react-dom.js"
+        },
+        {
+          "path": "web_modules/workbox-window.js"
         },
         {
           "path": "_dist_/App.js"
@@ -122,6 +136,9 @@
       "imports": [],
       "exports": [],
       "inputs": {
+        "__snowpack__/env.js": {
+          "bytesInOutput": 56
+        },
         "web_modules/common/index-0ff745df.js": {
           "bytesInOutput": 7250
         },
@@ -129,7 +146,10 @@
           "bytesInOutput": 51
         },
         "web_modules/react-dom.js": {
-          "bytesInOutput": 124033
+          "bytesInOutput": 124057
+        },
+        "web_modules/workbox-window.js": {
+          "bytesInOutput": 5236
         },
         "web_modules/react-dropzone.js": {
           "bytesInOutput": 17037
@@ -147,13 +167,13 @@
           "bytesInOutput": 826
         },
         "_dist_/App.js": {
-          "bytesInOutput": 1723
+          "bytesInOutput": 1722
         },
         "_dist_/index.js": {
-          "bytesInOutput": 61
+          "bytesInOutput": 172
         }
       },
-      "bytes": 157977
+      "bytes": 163404
     }
   }
 }
