@@ -1,5 +1,5 @@
 import React from "../web_modules/react.js";
-const help = Object.assign(document.createElement("a"), {href: "h.js"});
+const help = Object.assign(document.createElement("a"), {href: "popup.js"});
 const helperUrl = help.href;
 export const Usage = () => /* @__PURE__ */ React.createElement("pre", {
   className: "hljs"

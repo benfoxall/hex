@@ -7,17 +7,18 @@ import.meta.env = __SNOWPACK_ENV__;
   (This isn't the actual code)
 */
 
-// Find the page path
-const url = new URL(import.meta.url.replace(/h\.js$/, ""));
+// Find the address relative to this script location
+const url = new URL(import.meta.url.replace(/popup\.js$/, ""));
 
+// reference to the opened window
 let hex = null;
 
-async function popup() {
-  // might be already loaded
+async function open() {
+  // might be already there
   if (hex && !hex.closed) return;
 
   // open the window
-  hex = window.open(url.href, "hex", "width=300");
+  hex = window.open(url.href, "hex", "width=500");
 
   // wait until we've heard something back
   await new Promise((resolve) => {
@@ -32,7 +33,7 @@ async function popup() {
   });
 }
 
-function toBuffer(any) {
+function asBuffer(any) {
   if (any instanceof ArrayBuffer) {
     return any;
   }
@@ -47,9 +48,9 @@ function toBuffer(any) {
 }
 
 export async function view(data) {
-  const buffer = toBuffer(data);
+  const buffer = asBuffer(data);
 
-  await popup();
+  await open();
 
   hex.postMessage(buffer, url.origin);
   hex.focus();
