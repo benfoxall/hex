@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 // Mock window.matchMedia for tests
 Object.defineProperty(window, 'matchMedia', {
@@ -18,4 +19,3 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock URL.createObjectURL and revokeObjectURL
 global.URL.createObjectURL = vi.fn(() => 'blob:mock-url');
 global.URL.revokeObjectURL = vi.fn();
-
