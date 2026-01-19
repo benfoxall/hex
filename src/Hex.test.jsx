@@ -1,5 +1,13 @@
 import { describe, it, expect } from 'vitest';
 
+// TODO: These tests currently replicate the logic from Hex.jsx rather than importing
+// the actual functions. In the future, consider refactoring Hex.jsx to export
+// testable functions like:
+// - export const formatHexPairs = (u8, size) => { ... }
+// - export const formatAscii = (u8) => { ... }
+// - export const formatRowAddress = (index, bytesPerRow) => { ... }
+// This would allow testing the actual implementation instead of duplicating logic.
+
 describe('HexPairs conversion', () => {
   // Test hex conversion logic directly
   it('should convert bytes to hex pairs', () => {
