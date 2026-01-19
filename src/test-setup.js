@@ -23,10 +23,13 @@ global.URL.revokeObjectURL = vi.fn();
 // Mock Blob.arrayBuffer() for jsdom compatibility
 if (typeof Blob !== 'undefined' && !Blob.prototype.arrayBuffer) {
   Blob.prototype.arrayBuffer = function() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         resolve(reader.result);
+      };
+      reader.onerror = () => {
+        reject(new Error('Failed to read blob as array buffer'));
       };
       reader.readAsArrayBuffer(this);
     });
@@ -36,10 +39,13 @@ if (typeof Blob !== 'undefined' && !Blob.prototype.arrayBuffer) {
 // Mock File.arrayBuffer() for jsdom compatibility
 if (typeof File !== 'undefined' && !File.prototype.arrayBuffer) {
   File.prototype.arrayBuffer = function() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         resolve(reader.result);
+      };
+      reader.onerror = () => {
+        reject(new Error('Failed to read file as array buffer'));
       };
       reader.readAsArrayBuffer(this);
     });

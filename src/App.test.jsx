@@ -3,6 +3,17 @@ import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { App } from './App';
 
+// Helper function to simulate file drop
+const simulateFileDrop = (file) => {
+  const input = document.querySelector('input[type="file"]');
+  Object.defineProperty(input, 'files', {
+    value: [file],
+    writable: false,
+  });
+  const changeEvent = new Event('change', { bubbles: true });
+  input.dispatchEvent(changeEvent);
+};
+
 describe('App - Integration Tests', () => {
   beforeEach(() => {
     // Mock window.opener to null so we don't try to close windows
@@ -24,18 +35,8 @@ describe('App - Integration Tests', () => {
     const fileContent = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]); // "Hello"
     const file = new File([fileContent], 'test.bin', { type: 'application/octet-stream' });
     
-    // Get the dropzone input
-    const input = document.querySelector('input[type="file"]');
-    
-    // Simulate file drop by triggering the input change
-    Object.defineProperty(input, 'files', {
-      value: [file],
-      writable: false,
-    });
-    
-    // Fire the change event to trigger onDrop
-    const changeEvent = new Event('change', { bubbles: true });
-    input.dispatchEvent(changeEvent);
+    // Simulate file drop
+    simulateFileDrop(file);
     
     // Wait for the file name to appear (using regex to handle whitespace)
     await waitFor(() => {
@@ -57,17 +58,8 @@ describe('App - Integration Tests', () => {
     const fileContent = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]); // "Hello"
     const file = new File([fileContent], 'test.bin', { type: 'application/octet-stream' });
     
-    // Get the dropzone input
-    const input = document.querySelector('input[type="file"]');
-    
     // Simulate file drop
-    Object.defineProperty(input, 'files', {
-      value: [file],
-      writable: false,
-    });
-    
-    const changeEvent = new Event('change', { bubbles: true });
-    input.dispatchEvent(changeEvent);
+    simulateFileDrop(file);
     
     // Wait for hex content to be rendered
     await waitFor(() => {
@@ -89,14 +81,7 @@ describe('App - Integration Tests', () => {
     const fileContent = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]);
     const file = new File([fileContent], 'test.bin', { type: 'application/octet-stream' });
     
-    const input = document.querySelector('input[type="file"]');
-    Object.defineProperty(input, 'files', {
-      value: [file],
-      writable: false,
-    });
-    
-    const changeEvent = new Event('change', { bubbles: true });
-    input.dispatchEvent(changeEvent);
+    simulateFileDrop(file);
     
     // Wait for file to be loaded
     await waitFor(() => {
@@ -122,14 +107,7 @@ describe('App - Integration Tests', () => {
     // Create an empty file
     const file = new File([], 'empty.bin', { type: 'application/octet-stream' });
     
-    const input = document.querySelector('input[type="file"]');
-    Object.defineProperty(input, 'files', {
-      value: [file],
-      writable: false,
-    });
-    
-    const changeEvent = new Event('change', { bubbles: true });
-    input.dispatchEvent(changeEvent);
+    simulateFileDrop(file);
     
     // Wait for file name to appear
     await waitFor(() => {
@@ -148,14 +126,7 @@ describe('App - Integration Tests', () => {
     const fileContent = new Uint8Array([0x41, 0x42, 0x43]);
     const file = new File([fileContent], 'abc.bin', { type: 'application/octet-stream' });
     
-    const input = document.querySelector('input[type="file"]');
-    Object.defineProperty(input, 'files', {
-      value: [file],
-      writable: false,
-    });
-    
-    const changeEvent = new Event('change', { bubbles: true });
-    input.dispatchEvent(changeEvent);
+    simulateFileDrop(file);
     
     // Wait for the hex viewer to render with rows
     await waitFor(() => {
@@ -215,14 +186,7 @@ describe('App - Integration Tests', () => {
     const fileContent = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]);
     const file = new File([fileContent], 'download-test.bin', { type: 'application/octet-stream' });
     
-    const input = document.querySelector('input[type="file"]');
-    Object.defineProperty(input, 'files', {
-      value: [file],
-      writable: false,
-    });
-    
-    const changeEvent = new Event('change', { bubbles: true });
-    input.dispatchEvent(changeEvent);
+    simulateFileDrop(file);
     
     await waitFor(() => {
       expect(screen.getByText(/download-test\.bin/)).toBeInTheDocument();
