@@ -26,6 +26,7 @@ export const Hex = ({ blob }) => {
     getScrollElement: () => parentRef.current,
     estimateSize: () => 20,
     overscan: 5,
+    // Provide initial dimensions for testing environments where the container might not have layout
     initialRect: { width: 1000, height: 1000 },
   });
 

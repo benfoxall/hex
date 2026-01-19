@@ -28,12 +28,15 @@ if (typeof global.ResizeObserver === 'undefined') {
       this.observations = new Map();
     }
     observe(target) {
-      this.observations.set(target, { clientWidth: 1024, clientHeight: 768 });
+      // Provide reasonable default dimensions for test environment
+      const mockWidth = 1024;
+      const mockHeight = 768;
+      this.observations.set(target, { clientWidth: mockWidth, clientHeight: mockHeight });
       // Trigger callback immediately with mock entry
       this.callback([
         {
           target,
-          contentRect: { width: 1024, height: 768, top: 0, left: 0, bottom: 768, right: 1024 },
+          contentRect: { width: mockWidth, height: mockHeight, top: 0, left: 0, bottom: mockHeight, right: mockWidth },
         },
       ], this);
     }
