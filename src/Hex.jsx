@@ -1,6 +1,6 @@
 import React, { useEffect, useState, memo } from "react";
 import { useMedia } from "./util";
-import { useVirtual } from "react-virtual";
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 export const Hex = ({ blob }) => {
   const [buffer, setBuffer] = useState(new ArrayBuffer());
@@ -21,19 +21,22 @@ export const Hex = ({ blob }) => {
 
   const parentRef = React.useRef();
 
-  const { totalSize, virtualItems } = useVirtual({
-    size,
-    parentRef,
-    estimateSize: React.useCallback(() => 20, []),
-    paddingEnd: 20,
+  const virtualizer = useVirtualizer({
+    count: size,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 20,
     overscan: 5,
+    initialRect: { width: 1000, height: 1000 },
   });
 
+  const virtualItems = virtualizer.getVirtualItems();
+
   return (
-    <main ref={parentRef}>
+    <main ref={parentRef} style={{ overflow: 'auto', flex: 1 }}>
       <div
         style={{
-          height: `${totalSize}px`,
+          height: `${virtualizer.getTotalSize()}px`,
+          width: '100%',
           position: "relative",
         }}
       >
@@ -44,6 +47,7 @@ export const Hex = ({ blob }) => {
               position: "absolute",
               top: 0,
               left: 0,
+              width: '100%',
               transform: `translateY(${virtualRow.start}px)`,
             }}
           >

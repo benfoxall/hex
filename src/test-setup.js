@@ -20,6 +20,32 @@ Object.defineProperty(window, 'matchMedia', {
 global.URL.createObjectURL = vi.fn(() => 'blob:mock-url');
 global.URL.revokeObjectURL = vi.fn();
 
+// Mock ResizeObserver for @tanstack/react-virtual
+if (typeof global.ResizeObserver === 'undefined') {
+  global.ResizeObserver = class ResizeObserver {
+    constructor(callback) {
+      this.callback = callback;
+      this.observations = new Map();
+    }
+    observe(target) {
+      this.observations.set(target, { clientWidth: 1024, clientHeight: 768 });
+      // Trigger callback immediately with mock entry
+      this.callback([
+        {
+          target,
+          contentRect: { width: 1024, height: 768, top: 0, left: 0, bottom: 768, right: 1024 },
+        },
+      ], this);
+    }
+    unobserve(target) {
+      this.observations.delete(target);
+    }
+    disconnect() {
+      this.observations.clear();
+    }
+  };
+}
+
 // Mock Blob.arrayBuffer() for jsdom compatibility
 if (typeof Blob !== 'undefined' && !Blob.prototype.arrayBuffer) {
   Blob.prototype.arrayBuffer = function() {

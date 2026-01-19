@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { render, screen, renderHook } from '@testing-library/react';
+import { act } from 'react';
 import React from 'react';
 import { ByteSize, useObjectURL, useMedia } from './util';
 
