@@ -9,7 +9,7 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "start": "snowpack dev",
-    "build": "snowpack build && workbox generateSW workbox-config.js"
+    "build": "snowpack build && workbox generateSW workbox-config.cjs"
   },
   "repository": {
     "type": "git",
