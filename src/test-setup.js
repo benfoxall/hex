@@ -19,3 +19,30 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock URL.createObjectURL and revokeObjectURL
 global.URL.createObjectURL = vi.fn(() => 'blob:mock-url');
 global.URL.revokeObjectURL = vi.fn();
+
+// Mock Blob.arrayBuffer() for jsdom compatibility
+if (typeof Blob !== 'undefined' && !Blob.prototype.arrayBuffer) {
+  Blob.prototype.arrayBuffer = function() {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.readAsArrayBuffer(this);
+    });
+  };
+}
+
+// Mock File.arrayBuffer() for jsdom compatibility
+if (typeof File !== 'undefined' && !File.prototype.arrayBuffer) {
+  File.prototype.arrayBuffer = function() {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.readAsArrayBuffer(this);
+    });
+  };
+}
+
