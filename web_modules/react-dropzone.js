@@ -1,4 +1,4 @@
-import { c as createCommonjsModule, g as getDefaultExportFromCjs, r as react } from './common/index-0ff745df.js';
+import { c as createCommonjsModule, g as getDefaultExportFromCjs, r as react } from './common/index-8af8b000.js';
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -7,9 +7,11 @@ import { c as createCommonjsModule, g as getDefaultExportFromCjs, r as react } f
  * LICENSE file in the root directory of this source tree.
  */
 
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+var ReactPropTypesSecret$1 = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
-var ReactPropTypesSecret_1 = ReactPropTypesSecret;
+var ReactPropTypesSecret_1 = ReactPropTypesSecret$1;
+
+var ReactPropTypesSecret = ReactPropTypesSecret_1;
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -17,7 +19,7 @@ emptyFunctionWithReset.resetWarningCache = emptyFunction;
 
 var factoryWithThrowingShims = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
-    if (secret === ReactPropTypesSecret_1) {
+    if (secret === ReactPropTypesSecret) {
       // It is still safe when called from React.
       return;
     }
@@ -35,6 +37,7 @@ var factoryWithThrowingShims = function() {
   // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
   var ReactPropTypes = {
     array: shim,
+    bigint: shim,
     bool: shim,
     func: shim,
     number: shim,
@@ -63,6 +66,8 @@ var factoryWithThrowingShims = function() {
   return ReactPropTypes;
 };
 
+var require$$0 = factoryWithThrowingShims;
+
 var propTypes = createCommonjsModule(function (module) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -74,11 +79,13 @@ var propTypes = createCommonjsModule(function (module) {
 {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = factoryWithThrowingShims();
+  module.exports = require$$0();
 }
 });
 
-/*! *****************************************************************************
+var PropTypes = propTypes;
+
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -104,12 +111,12 @@ function __awaiter(thisArg, _arguments, P, generator) {
 }
 
 function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -148,26 +155,99 @@ function __read(o, n) {
     return ar;
 }
 
+/** @deprecated */
 function __spread() {
     for (var ar = [], i = 0; i < arguments.length; i++)
         ar = ar.concat(__read(arguments[i]));
     return ar;
 }
 
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+
 var COMMON_MIME_TYPES = new Map([
-    ['avi', 'video/avi'],
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+    ['aac', 'audio/aac'],
+    ['abw', 'application/x-abiword'],
+    ['arc', 'application/x-freearc'],
+    ['avif', 'image/avif'],
+    ['avi', 'video/x-msvideo'],
+    ['azw', 'application/vnd.amazon.ebook'],
+    ['bin', 'application/octet-stream'],
+    ['bmp', 'image/bmp'],
+    ['bz', 'application/x-bzip'],
+    ['bz2', 'application/x-bzip2'],
+    ['cda', 'application/x-cdf'],
+    ['csh', 'application/x-csh'],
+    ['css', 'text/css'],
+    ['csv', 'text/csv'],
+    ['doc', 'application/msword'],
+    ['docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+    ['eot', 'application/vnd.ms-fontobject'],
+    ['epub', 'application/epub+zip'],
+    ['gz', 'application/gzip'],
     ['gif', 'image/gif'],
-    ['ico', 'image/x-icon'],
+    ['htm', 'text/html'],
+    ['html', 'text/html'],
+    ['ico', 'image/vnd.microsoft.icon'],
+    ['ics', 'text/calendar'],
+    ['jar', 'application/java-archive'],
     ['jpeg', 'image/jpeg'],
     ['jpg', 'image/jpeg'],
+    ['js', 'text/javascript'],
+    ['json', 'application/json'],
+    ['jsonld', 'application/ld+json'],
+    ['mid', 'audio/midi'],
+    ['midi', 'audio/midi'],
+    ['mjs', 'text/javascript'],
+    ['mp3', 'audio/mpeg'],
+    ['mp4', 'video/mp4'],
+    ['mpeg', 'video/mpeg'],
+    ['mpkg', 'application/vnd.apple.installer+xml'],
+    ['odp', 'application/vnd.oasis.opendocument.presentation'],
+    ['ods', 'application/vnd.oasis.opendocument.spreadsheet'],
+    ['odt', 'application/vnd.oasis.opendocument.text'],
+    ['oga', 'audio/ogg'],
+    ['ogv', 'video/ogg'],
+    ['ogx', 'application/ogg'],
+    ['opus', 'audio/opus'],
+    ['otf', 'font/otf'],
+    ['png', 'image/png'],
+    ['pdf', 'application/pdf'],
+    ['php', 'application/x-httpd-php'],
+    ['ppt', 'application/vnd.ms-powerpoint'],
+    ['pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
+    ['rar', 'application/vnd.rar'],
+    ['rtf', 'application/rtf'],
+    ['sh', 'application/x-sh'],
+    ['svg', 'image/svg+xml'],
+    ['swf', 'application/x-shockwave-flash'],
+    ['tar', 'application/x-tar'],
+    ['tif', 'image/tiff'],
+    ['tiff', 'image/tiff'],
+    ['ts', 'video/mp2t'],
+    ['ttf', 'font/ttf'],
+    ['txt', 'text/plain'],
+    ['vsd', 'application/vnd.visio'],
+    ['wav', 'audio/wav'],
+    ['weba', 'audio/webm'],
+    ['webm', 'video/webm'],
+    ['webp', 'image/webp'],
+    ['woff', 'font/woff'],
+    ['woff2', 'font/woff2'],
+    ['xhtml', 'application/xhtml+xml'],
+    ['xls', 'application/vnd.ms-excel'],
+    ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+    ['xml', 'application/xml'],
+    ['xul', 'application/vnd.mozilla.xul+xml'],
+    ['zip', 'application/zip'],
+    ['7z', 'application/x-7z-compressed'],
+    // Others
     ['mkv', 'video/x-matroska'],
     ['mov', 'video/quicktime'],
-    ['mp4', 'video/mp4'],
-    ['pdf', 'application/pdf'],
-    ['png', 'image/png'],
-    ['zip', 'application/zip'],
-    ['doc', 'application/msword'],
-    ['docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+    ['msg', 'application/vnd.ms-outlook']
 ]);
 function toFileWithPath(file, path) {
     var f = withMimeType(file);
@@ -217,30 +297,53 @@ var FILES_TO_IGNORE = [
  * Convert a DragEvent's DataTrasfer object to a list of File objects
  * NOTE: If some of the items are folders,
  * everything will be flattened and placed in the same list but the paths will be kept as a {path} property.
+ *
+ * EXPERIMENTAL: A list of https://developer.mozilla.org/en-US/docs/Web/API/FileSystemHandle objects can also be passed as an arg
+ * and a list of File objects will be returned.
+ *
  * @param evt
  */
 function fromEvent(evt) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            return [2 /*return*/, isDragEvt(evt) && evt.dataTransfer
-                    ? getDataTransferFiles(evt.dataTransfer, evt.type)
-                    : getInputFiles(evt)];
+            if (isObject(evt) && isDataTransfer(evt)) {
+                return [2 /*return*/, getDataTransferFiles(evt.dataTransfer, evt.type)];
+            }
+            else if (isChangeEvt(evt)) {
+                return [2 /*return*/, getInputFiles(evt)];
+            }
+            else if (Array.isArray(evt) && evt.every(function (item) { return 'getFile' in item && typeof item.getFile === 'function'; })) {
+                return [2 /*return*/, getFsHandleFiles(evt)];
+            }
+            return [2 /*return*/, []];
         });
     });
 }
-function isDragEvt(value) {
-    return !!value.dataTransfer;
+function isDataTransfer(value) {
+    return isObject(value.dataTransfer);
+}
+function isChangeEvt(value) {
+    return isObject(value) && isObject(value.target);
+}
+function isObject(v) {
+    return typeof v === 'object' && v !== null;
 }
 function getInputFiles(evt) {
-    var files = isInput(evt.target)
-        ? evt.target.files
-            ? fromList(evt.target.files)
-            : []
-        : [];
-    return files.map(function (file) { return toFileWithPath(file); });
+    return fromList(evt.target.files).map(function (file) { return toFileWithPath(file); });
 }
-function isInput(value) {
-    return value !== null;
+// Ee expect each handle to be https://developer.mozilla.org/en-US/docs/Web/API/FileSystemFileHandle
+function getFsHandleFiles(handles) {
+    return __awaiter(this, void 0, void 0, function () {
+        var files;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Promise.all(handles.map(function (h) { return h.getFile(); }))];
+                case 1:
+                    files = _a.sent();
+                    return [2 /*return*/, files.map(function (file) { return toFileWithPath(file); })];
+            }
+        });
+    });
 }
 function getDataTransferFiles(dt, type) {
     return __awaiter(this, void 0, void 0, function () {
@@ -248,6 +351,9 @@ function getDataTransferFiles(dt, type) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    if (dt === null) {
+                        return [2 /*return*/, []];
+                    }
                     if (!dt.items) return [3 /*break*/, 2];
                     items = fromList(dt.items)
                         .filter(function (item) { return item.kind === 'file'; });
@@ -274,6 +380,9 @@ function noIgnoredFiles(files) {
 // https://developer.mozilla.org/en-US/docs/Web/API/FileList
 // https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItemList
 function fromList(items) {
+    if (items === null) {
+        return [];
+    }
     var files = [];
     // tslint:disable: prefer-for-of
     for (var i = 0; i < items.length; i++) {
@@ -382,6 +491,11 @@ exports.__esModule = true;
 exports.default = function (file, acceptedFiles) {
   if (file && acceptedFiles) {
     var acceptedFilesArray = Array.isArray(acceptedFiles) ? acceptedFiles : acceptedFiles.split(',');
+
+    if (acceptedFilesArray.length === 0) {
+      return true;
+    }
+
     var fileName = file.name || '';
     var mimeType = (file.type || '').toLowerCase();
     var baseMimeType = mimeType.replace(/\/.*$/, '');
@@ -405,22 +519,28 @@ exports.default = function (file, acceptedFiles) {
 
 var accepts = /*@__PURE__*/getDefaultExportFromCjs(es);
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty$1(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _defineProperty$1(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _slicedToArray$1(arr, i) { return _arrayWithHoles$1(arr) || _iterableToArrayLimit$1(arr, i) || _unsupportedIterableToArray$1(arr, i) || _nonIterableRest$1(); }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _nonIterableRest$1() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+
+function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit$1(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles$1(arr) { if (Array.isArray(arr)) return arr; }
 
 var FILE_INVALID_TYPE = 'file-invalid-type';
 var FILE_TOO_LARGE = 'file-too-large';
 var FILE_TOO_SMALL = 'file-too-small';
-var TOO_MANY_FILES = 'too-many-files'; // File Errors
+var TOO_MANY_FILES = 'too-many-files';
 
 var getInvalidTypeRejectionErr = function getInvalidTypeRejectionErr(accept) {
   accept = Array.isArray(accept) && accept.length === 1 ? accept[0] : accept;
@@ -433,13 +553,13 @@ var getInvalidTypeRejectionErr = function getInvalidTypeRejectionErr(accept) {
 var getTooLargeRejectionErr = function getTooLargeRejectionErr(maxSize) {
   return {
     code: FILE_TOO_LARGE,
-    message: "File is larger than ".concat(maxSize, " bytes")
+    message: "File is larger than ".concat(maxSize, " ").concat(maxSize === 1 ? 'byte' : 'bytes')
   };
 };
 var getTooSmallRejectionErr = function getTooSmallRejectionErr(minSize) {
   return {
     code: FILE_TOO_SMALL,
-    message: "File is smaller than ".concat(minSize, " bytes")
+    message: "File is smaller than ".concat(minSize, " ").concat(minSize === 1 ? 'byte' : 'bytes')
   };
 };
 var TOO_MANY_FILES_REJECTION = {
@@ -481,11 +601,11 @@ function allFilesAccepted(_ref) {
 
   return files.every(function (file) {
     var _fileAccepted = fileAccepted(file, accept),
-        _fileAccepted2 = _slicedToArray(_fileAccepted, 1),
+        _fileAccepted2 = _slicedToArray$1(_fileAccepted, 1),
         accepted = _fileAccepted2[0];
 
     var _fileMatchSize = fileMatchSize(file, minSize, maxSize),
-        _fileMatchSize2 = _slicedToArray(_fileMatchSize, 1),
+        _fileMatchSize2 = _slicedToArray$1(_fileMatchSize, 1),
         sizeMatch = _fileMatchSize2[0];
 
     return accepted && sizeMatch;
@@ -561,30 +681,65 @@ function composeEventHandlers() {
     });
   };
 }
+/**
+ * canUseFileSystemAccessAPI checks if the [File System Access API](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API)
+ * is supported by the browser.
+ * @returns {boolean}
+ */
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$1(arr) || _nonIterableSpread(); }
+function canUseFileSystemAccessAPI() {
+  return 'showOpenFilePicker' in window;
+}
+/**
+ * filePickerOptionsTypes returns the {types} option for https://developer.mozilla.org/en-US/docs/Web/API/window/showOpenFilePicker
+ * based on the accept attr (see https://github.com/react-dropzone/attr-accept)
+ * E.g: converts ['image/*', 'text/*'] to {'image/*': [], 'text/*': []}
+ * @param {string|string[]} accept
+ */
+
+function filePickerOptionsTypes(accept) {
+  accept = typeof accept === 'string' ? accept.split(',') : accept;
+  return [{
+    description: 'everything',
+    // TODO: Need to handle filtering more elegantly than this!
+    accept: Array.isArray(accept) // Accept just MIME types as per spec
+    // NOTE: accept can be https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#unique_file_type_specifiers
+    ? accept.filter(function (item) {
+      return item === 'audio/*' || item === 'video/*' || item === 'image/*' || item === 'text/*' || /\w+\/[-+.\w]+/g.test(item);
+    }).reduce(function (a, b) {
+      return _objectSpread$1(_objectSpread$1({}, a), {}, _defineProperty$1({}, b, []));
+    }, {}) : {}
+  }];
+}
+
+var _excluded = ["children"],
+    _excluded2 = ["open"],
+    _excluded3 = ["refKey", "role", "onKeyDown", "onFocus", "onBlur", "onClick", "onDragEnter", "onDragOver", "onDragLeave", "onDrop"],
+    _excluded4 = ["refKey", "onChange", "onClick"];
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray$1(arr); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
-function _slicedToArray$1(arr, i) { return _arrayWithHoles$1(arr) || _iterableToArrayLimit$1(arr, i) || _unsupportedIterableToArray$1(arr, i) || _nonIterableRest$1(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest$1() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit$1(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _arrayWithHoles$1(arr) { if (Array.isArray(arr)) return arr; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -608,11 +763,11 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 var Dropzone = /*#__PURE__*/react.forwardRef(function (_ref, ref) {
   var children = _ref.children,
-      params = _objectWithoutProperties(_ref, ["children"]);
+      params = _objectWithoutProperties(_ref, _excluded);
 
   var _useDropzone = useDropzone(params),
       open = _useDropzone.open,
-      props = _objectWithoutProperties(_useDropzone, ["open"]);
+      props = _objectWithoutProperties(_useDropzone, _excluded2);
 
   react.useImperativeHandle(ref, function () {
     return {
@@ -637,7 +792,9 @@ var defaultProps = {
   noClick: false,
   noKeyboard: false,
   noDrag: false,
-  noDragEventsBubbling: false
+  noDragEventsBubbling: false,
+  validator: null,
+  useFsAccessApi: false
 };
 Dropzone.defaultProps = defaultProps;
 Dropzone.propTypes = {
@@ -657,7 +814,7 @@ Dropzone.propTypes = {
    * @param {File[]} params.acceptedFiles Accepted files
    * @param {FileRejection[]} params.fileRejections Rejected files and why they were rejected
    */
-  children: propTypes.func,
+  children: PropTypes.func,
 
   /**
    * Set accepted file types.
@@ -667,92 +824,103 @@ Dropzone.propTypes = {
    * Windows. In some cases there might not be a mime type set at all.
    * See: https://github.com/react-dropzone/react-dropzone/issues/276
    */
-  accept: propTypes.oneOfType([propTypes.string, propTypes.arrayOf(propTypes.string)]),
+  accept: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
 
   /**
    * Allow drag 'n' drop (or selection from the file dialog) of multiple files
    */
-  multiple: propTypes.bool,
+  multiple: PropTypes.bool,
 
   /**
    * If false, allow dropped items to take over the current browser window
    */
-  preventDropOnDocument: propTypes.bool,
+  preventDropOnDocument: PropTypes.bool,
 
   /**
    * If true, disables click to open the native file selection dialog
    */
-  noClick: propTypes.bool,
+  noClick: PropTypes.bool,
 
   /**
    * If true, disables SPACE/ENTER to open the native file selection dialog.
    * Note that it also stops tracking the focus state.
    */
-  noKeyboard: propTypes.bool,
+  noKeyboard: PropTypes.bool,
 
   /**
    * If true, disables drag 'n' drop
    */
-  noDrag: propTypes.bool,
+  noDrag: PropTypes.bool,
 
   /**
    * If true, stops drag event propagation to parents
    */
-  noDragEventsBubbling: propTypes.bool,
+  noDragEventsBubbling: PropTypes.bool,
 
   /**
    * Minimum file size (in bytes)
    */
-  minSize: propTypes.number,
+  minSize: PropTypes.number,
 
   /**
    * Maximum file size (in bytes)
    */
-  maxSize: propTypes.number,
+  maxSize: PropTypes.number,
 
   /**
    * Maximum accepted number of files
    * The default value is 0 which means there is no limitation to how many files are accepted.
    */
-  maxFiles: propTypes.number,
+  maxFiles: PropTypes.number,
 
   /**
    * Enable/disable the dropzone
    */
-  disabled: propTypes.bool,
+  disabled: PropTypes.bool,
 
   /**
    * Use this to provide a custom file aggregator
    *
    * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
    */
-  getFilesFromEvent: propTypes.func,
+  getFilesFromEvent: PropTypes.func,
 
   /**
    * Cb for when closing the file dialog with no selection
    */
-  onFileDialogCancel: propTypes.func,
+  onFileDialogCancel: PropTypes.func,
+
+  /**
+   * Cb for when opening the file dialog
+   */
+  onFileDialogOpen: PropTypes.func,
+
+  /**
+   * Set to true to use the https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API
+   * to open the file picker instead of using an `<input type="file">` click event.
+   */
+  useFsAccessApi: PropTypes.bool,
 
   /**
    * Cb for when the `dragenter` event occurs.
    *
    * @param {DragEvent} event
    */
-  onDragEnter: propTypes.func,
+  onDragEnter: PropTypes.func,
 
   /**
    * Cb for when the `dragleave` event occurs
    *
    * @param {DragEvent} event
    */
-  onDragLeave: propTypes.func,
+  onDragLeave: PropTypes.func,
 
   /**
    * Cb for when the `dragover` event occurs
    *
    * @param {DragEvent} event
    */
-  onDragOver: propTypes.func,
+  onDragOver: PropTypes.func,
 
   /**
    * Cb for when the `drop` event occurs.
@@ -784,7 +952,7 @@ Dropzone.propTypes = {
    * @param {FileRejection[]} fileRejections
    * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
    */
-  onDrop: propTypes.func,
+  onDrop: PropTypes.func,
 
   /**
    * Cb for when the `drop` event occurs.
@@ -793,7 +961,7 @@ Dropzone.propTypes = {
    * @param {File[]} files
    * @param {(DragEvent|Event)} event
    */
-  onDropAccepted: propTypes.func,
+  onDropAccepted: PropTypes.func,
 
   /**
    * Cb for when the `drop` event occurs.
@@ -802,7 +970,14 @@ Dropzone.propTypes = {
    * @param {FileRejection[]} fileRejections
    * @param {(DragEvent|Event)} event
    */
-  onDropRejected: propTypes.func
+  onDropRejected: PropTypes.func,
+
+  /**
+   * Custom validation function
+   * @param {File} file
+   * @returns {FileError|FileError[]}
+   */
+  validator: PropTypes.func
 };
 /**
  * A function that is invoked for the `dragenter`,
@@ -918,6 +1093,9 @@ var initialState = {
  * @param {boolean} [props.disabled=false] Enable/disable the dropzone
  * @param {getFilesFromEvent} [props.getFilesFromEvent] Use this to provide a custom file aggregator
  * @param {Function} [props.onFileDialogCancel] Cb for when closing the file dialog with no selection
+ * @param {boolean} [props.useFsAccessApi] Set to true to use the https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API
+ * to open the file picker instead of using an `<input type="file">` click event.
+ * @param {Function} [props.onFileDialogOpen] Cb for when opening the file dialog
  * @param {dragCb} [props.onDragEnter] Cb for when the `dragenter` event occurs.
  * @param {dragCb} [props.onDragLeave] Cb for when the `dragleave` event occurs
  * @param {dragCb} [props.onDragOver] Cb for when the `dragover` event occurs
@@ -969,33 +1147,32 @@ function useDropzone() {
       onDropAccepted = _defaultProps$options.onDropAccepted,
       onDropRejected = _defaultProps$options.onDropRejected,
       onFileDialogCancel = _defaultProps$options.onFileDialogCancel,
+      onFileDialogOpen = _defaultProps$options.onFileDialogOpen,
+      useFsAccessApi = _defaultProps$options.useFsAccessApi,
       preventDropOnDocument = _defaultProps$options.preventDropOnDocument,
       noClick = _defaultProps$options.noClick,
       noKeyboard = _defaultProps$options.noKeyboard,
       noDrag = _defaultProps$options.noDrag,
-      noDragEventsBubbling = _defaultProps$options.noDragEventsBubbling;
+      noDragEventsBubbling = _defaultProps$options.noDragEventsBubbling,
+      validator = _defaultProps$options.validator;
 
+  var onFileDialogOpenCb = react.useMemo(function () {
+    return typeof onFileDialogOpen === 'function' ? onFileDialogOpen : noop;
+  }, [onFileDialogOpen]);
+  var onFileDialogCancelCb = react.useMemo(function () {
+    return typeof onFileDialogCancel === 'function' ? onFileDialogCancel : noop;
+  }, [onFileDialogCancel]);
   var rootRef = react.useRef(null);
   var inputRef = react.useRef(null);
 
   var _useReducer = react.useReducer(reducer, initialState),
-      _useReducer2 = _slicedToArray$1(_useReducer, 2),
+      _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
   var isFocused = state.isFocused,
       isFileDialogActive = state.isFileDialogActive,
-      draggedFiles = state.draggedFiles; // Fn for opening the file dialog programmatically
-
-  var openFileDialog = react.useCallback(function () {
-    if (inputRef.current) {
-      dispatch({
-        type: 'openDialog'
-      });
-      inputRef.current.value = null;
-      inputRef.current.click();
-    }
-  }, [dispatch]); // Update file dialog active state when the window is focused on
+      draggedFiles = state.draggedFiles; // Update file dialog active state when the window is focused on
 
   var onWindowFocus = function onWindowFocus() {
     // Execute the timeout only if the file dialog is opened in the browser
@@ -1008,10 +1185,7 @@ function useDropzone() {
             dispatch({
               type: 'closeDialog'
             });
-
-            if (typeof onFileDialogCancel === 'function') {
-              onFileDialogCancel();
-            }
+            onFileDialogCancelCb();
           }
         }
       }, 300);
@@ -1019,49 +1193,15 @@ function useDropzone() {
   };
 
   react.useEffect(function () {
+    if (useFsAccessApi && canUseFileSystemAccessAPI()) {
+      return function () {};
+    }
+
     window.addEventListener('focus', onWindowFocus, false);
     return function () {
       window.removeEventListener('focus', onWindowFocus, false);
     };
-  }, [inputRef, isFileDialogActive, onFileDialogCancel]); // Cb to open the file dialog when SPACE/ENTER occurs on the dropzone
-
-  var onKeyDownCb = react.useCallback(function (event) {
-    // Ignore keyboard events bubbling up the DOM tree
-    if (!rootRef.current || !rootRef.current.isEqualNode(event.target)) {
-      return;
-    }
-
-    if (event.keyCode === 32 || event.keyCode === 13) {
-      event.preventDefault();
-      openFileDialog();
-    }
-  }, [rootRef, inputRef]); // Update focus state for the dropzone
-
-  var onFocusCb = react.useCallback(function () {
-    dispatch({
-      type: 'focus'
-    });
-  }, []);
-  var onBlurCb = react.useCallback(function () {
-    dispatch({
-      type: 'blur'
-    });
-  }, []); // Cb to open the file dialog when click occurs on the dropzone
-
-  var onClickCb = react.useCallback(function () {
-    if (noClick) {
-      return;
-    } // In IE11/Edge the file-browser dialog is blocking, therefore, use setTimeout()
-    // to ensure React can handle state changes
-    // See: https://github.com/react-dropzone/react-dropzone/issues/450
-
-
-    if (isIeOrEdge()) {
-      setTimeout(openFileDialog, 0);
-    } else {
-      openFileDialog();
-    }
-  }, [inputRef, noClick]);
+  }, [inputRef, isFileDialogActive, onFileDialogCancelCb, useFsAccessApi]);
   var dragTargetsRef = react.useRef([]);
 
   var onDocumentDrop = function onDocumentDrop(event) {
@@ -1116,8 +1256,9 @@ function useDropzone() {
     event.preventDefault();
     event.persist();
     stopPropagation(event);
+    var hasFiles = isEvtWithFiles(event);
 
-    if (event.dataTransfer) {
+    if (hasFiles && event.dataTransfer) {
       try {
         event.dataTransfer.dropEffect = 'copy';
       } catch (_unused) {}
@@ -1125,7 +1266,7 @@ function useDropzone() {
 
     }
 
-    if (isEvtWithFiles(event) && onDragOver) {
+    if (hasFiles && onDragOver) {
       onDragOver(event);
     }
 
@@ -1163,6 +1304,69 @@ function useDropzone() {
       onDragLeave(event);
     }
   }, [rootRef, onDragLeave, noDragEventsBubbling]);
+  var setFiles = react.useCallback(function (files, event) {
+    var acceptedFiles = [];
+    var fileRejections = [];
+    files.forEach(function (file) {
+      var _fileAccepted = fileAccepted(file, accept),
+          _fileAccepted2 = _slicedToArray(_fileAccepted, 2),
+          accepted = _fileAccepted2[0],
+          acceptError = _fileAccepted2[1];
+
+      var _fileMatchSize = fileMatchSize(file, minSize, maxSize),
+          _fileMatchSize2 = _slicedToArray(_fileMatchSize, 2),
+          sizeMatch = _fileMatchSize2[0],
+          sizeError = _fileMatchSize2[1];
+
+      var customErrors = validator ? validator(file) : null;
+
+      if (accepted && sizeMatch && !customErrors) {
+        acceptedFiles.push(file);
+      } else {
+        var errors = [acceptError, sizeError];
+
+        if (customErrors) {
+          errors = errors.concat(customErrors);
+        }
+
+        fileRejections.push({
+          file: file,
+          errors: errors.filter(function (e) {
+            return e;
+          })
+        });
+      }
+    });
+
+    if (!multiple && acceptedFiles.length > 1 || multiple && maxFiles >= 1 && acceptedFiles.length > maxFiles) {
+      // Reject everything and empty accepted files
+      acceptedFiles.forEach(function (file) {
+        fileRejections.push({
+          file: file,
+          errors: [TOO_MANY_FILES_REJECTION]
+        });
+      });
+      acceptedFiles.splice(0);
+    }
+
+    dispatch({
+      acceptedFiles: acceptedFiles,
+      fileRejections: fileRejections,
+      type: 'setFiles'
+    });
+
+    if (onDrop) {
+      onDrop(acceptedFiles, fileRejections, event);
+    }
+
+    if (fileRejections.length > 0 && onDropRejected) {
+      onDropRejected(fileRejections, event);
+    }
+
+    if (acceptedFiles.length > 0 && onDropAccepted) {
+      onDropAccepted(acceptedFiles, event);
+    }
+  }, [dispatch, multiple, accept, minSize, maxSize, maxFiles, onDrop, onDropAccepted, onDropRejected, validator]);
   var onDropCb = react.useCallback(function (event) {
     event.preventDefault(); // Persist here because we need the event later after getFilesFromEvent() is done
 
@@ -1176,67 +1380,87 @@ function useDropzone() {
           return;
         }
 
-        var acceptedFiles = [];
-        var fileRejections = [];
-        files.forEach(function (file) {
-          var _fileAccepted = fileAccepted(file, accept),
-              _fileAccepted2 = _slicedToArray$1(_fileAccepted, 2),
-              accepted = _fileAccepted2[0],
-              acceptError = _fileAccepted2[1];
-
-          var _fileMatchSize = fileMatchSize(file, minSize, maxSize),
-              _fileMatchSize2 = _slicedToArray$1(_fileMatchSize, 2),
-              sizeMatch = _fileMatchSize2[0],
-              sizeError = _fileMatchSize2[1];
-
-          if (accepted && sizeMatch) {
-            acceptedFiles.push(file);
-          } else {
-            var errors = [acceptError, sizeError].filter(function (e) {
-              return e;
-            });
-            fileRejections.push({
-              file: file,
-              errors: errors
-            });
-          }
-        });
-
-        if (!multiple && acceptedFiles.length > 1 || multiple && maxFiles >= 1 && acceptedFiles.length > maxFiles) {
-          // Reject everything and empty accepted files
-          acceptedFiles.forEach(function (file) {
-            fileRejections.push({
-              file: file,
-              errors: [TOO_MANY_FILES_REJECTION]
-            });
-          });
-          acceptedFiles.splice(0);
-        }
-
-        dispatch({
-          acceptedFiles: acceptedFiles,
-          fileRejections: fileRejections,
-          type: 'setFiles'
-        });
-
-        if (onDrop) {
-          onDrop(acceptedFiles, fileRejections, event);
-        }
-
-        if (fileRejections.length > 0 && onDropRejected) {
-          onDropRejected(fileRejections, event);
-        }
-
-        if (acceptedFiles.length > 0 && onDropAccepted) {
-          onDropAccepted(acceptedFiles, event);
-        }
+        setFiles(files, event);
       });
     }
 
     dispatch({
       type: 'reset'
     });
-  }, [multiple, accept, minSize, maxSize, maxFiles, getFilesFromEvent, onDrop, onDropAccepted, onDropRejected, noDragEventsBubbling]);
+  }, [getFilesFromEvent, setFiles, noDragEventsBubbling]); // Fn for opening the file dialog programmatically
+
+  var openFileDialog = react.useCallback(function () {
+    if (useFsAccessApi && canUseFileSystemAccessAPI()) {
+      dispatch({
+        type: 'openDialog'
+      });
+      onFileDialogOpenCb(); // https://developer.mozilla.org/en-US/docs/Web/API/window/showOpenFilePicker
+
+      var opts = {
+        multiple: multiple,
+        types: filePickerOptionsTypes(accept)
+      };
+      window.showOpenFilePicker(opts).then(function (handles) {
+        return getFilesFromEvent(handles);
+      }).then(function (files) {
+        return setFiles(files, null);
+      }).catch(function (e) {
+        return onFileDialogCancelCb(e);
+      }).finally(function () {
+        return dispatch({
+          type: 'closeDialog'
+        });
+      });
+      return;
+    }
+
+    if (inputRef.current) {
+      dispatch({
+        type: 'openDialog'
+      });
+      onFileDialogOpenCb();
+      inputRef.current.value = null;
+      inputRef.current.click();
+    }
+  }, [dispatch, onFileDialogOpenCb, onFileDialogCancelCb, useFsAccessApi, setFiles, accept, multiple]); // Cb to open the file dialog when SPACE/ENTER occurs on the dropzone
+
+  var onKeyDownCb = react.useCallback(function (event) {
+    // Ignore keyboard events bubbling up the DOM tree
+    if (!rootRef.current || !rootRef.current.isEqualNode(event.target)) {
+      return;
+    }
+
+    if (event.keyCode === 32 || event.keyCode === 13) {
+      event.preventDefault();
+      openFileDialog();
+    }
+  }, [rootRef, inputRef, openFileDialog]); // Update focus state for the dropzone
+
+  var onFocusCb = react.useCallback(function () {
+    dispatch({
+      type: 'focus'
+    });
+  }, []);
+  var onBlurCb = react.useCallback(function () {
+    dispatch({
+      type: 'blur'
+    });
+  }, []); // Cb to open the file dialog when click occurs on the dropzone
+
+  var onClickCb = react.useCallback(function () {
+    if (noClick) {
+      return;
+    } // In IE11/Edge the file-browser dialog is blocking, therefore, use setTimeout()
+    // to ensure React can handle state changes
+    // See: https://github.com/react-dropzone/react-dropzone/issues/450
+
+
+    if (isIeOrEdge()) {
+      setTimeout(openFileDialog, 0);
+    } else {
+      openFileDialog();
+    }
+  }, [inputRef, noClick, openFileDialog]);
 
   var composeHandler = function composeHandler(fn) {
     return disabled ? null : fn;
@@ -1261,6 +1485,7 @@ function useDropzone() {
       var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           _ref2$refKey = _ref2.refKey,
           refKey = _ref2$refKey === void 0 ? 'ref' : _ref2$refKey,
+          role = _ref2.role,
           onKeyDown = _ref2.onKeyDown,
           onFocus = _ref2.onFocus,
           onBlur = _ref2.onBlur,
@@ -1269,7 +1494,7 @@ function useDropzone() {
           onDragOver = _ref2.onDragOver,
           onDragLeave = _ref2.onDragLeave,
           onDrop = _ref2.onDrop,
-          rest = _objectWithoutProperties(_ref2, ["refKey", "onKeyDown", "onFocus", "onBlur", "onClick", "onDragEnter", "onDragOver", "onDragLeave", "onDrop"]);
+          rest = _objectWithoutProperties(_ref2, _excluded3);
 
       return _objectSpread(_objectSpread(_defineProperty({
         onKeyDown: composeKeyboardHandler(composeEventHandlers(onKeyDown, onKeyDownCb)),
@@ -1279,7 +1504,8 @@ function useDropzone() {
         onDragEnter: composeDragHandler(composeEventHandlers(onDragEnter, onDragEnterCb)),
         onDragOver: composeDragHandler(composeEventHandlers(onDragOver, onDragOverCb)),
         onDragLeave: composeDragHandler(composeEventHandlers(onDragLeave, onDragLeaveCb)),
-        onDrop: composeDragHandler(composeEventHandlers(onDrop, onDropCb))
+        onDrop: composeDragHandler(composeEventHandlers(onDrop, onDropCb)),
+        role: typeof role === 'string' && role !== '' ? role : 'button'
       }, refKey, rootRef), !disabled && !noKeyboard ? {
         tabIndex: 0
       } : {}), rest);
@@ -1295,7 +1521,7 @@ function useDropzone() {
           refKey = _ref3$refKey === void 0 ? 'ref' : _ref3$refKey,
           onChange = _ref3.onChange,
           onClick = _ref3.onClick,
-          rest = _objectWithoutProperties(_ref3, ["refKey", "onChange", "onClick"]);
+          rest = _objectWithoutProperties(_ref3, _excluded4);
 
       var inputProps = _defineProperty({
         accept: accept,
@@ -1349,7 +1575,7 @@ function reducer(state, action) {
       });
 
     case 'openDialog':
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return _objectSpread(_objectSpread({}, initialState), {}, {
         isFileDialogActive: true
       });
 
@@ -1374,17 +1600,13 @@ function reducer(state, action) {
       });
 
     case 'reset':
-      return _objectSpread(_objectSpread({}, state), {}, {
-        isFileDialogActive: false,
-        isDragActive: false,
-        draggedFiles: [],
-        acceptedFiles: [],
-        fileRejections: []
-      });
+      return _objectSpread({}, initialState);
 
     default:
       return state;
   }
 }
+
+function noop() {}
 
 export { useDropzone };

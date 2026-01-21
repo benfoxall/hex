@@ -1,4 +1,4 @@
-import { r as react } from './common/index-0ff745df.js';
+import { r as react } from './common/index-8af8b000.js';
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -105,12 +105,19 @@ function observeRect(node, cb) {
 
 var useIsomorphicLayoutEffect = typeof window !== 'undefined' ? react.useLayoutEffect : react.useEffect;
 
-function useRect(nodeRef) {
+function useRect(nodeRef, initialRect) {
+  if (initialRect === void 0) {
+    initialRect = {
+      width: 0,
+      height: 0
+    };
+  }
+
   var _React$useState = react.useState(nodeRef.current),
       element = _React$useState[0],
       setElement = _React$useState[1];
 
-  var _React$useReducer = react.useReducer(rectReducer, null),
+  var _React$useReducer = react.useReducer(rectReducer, initialRect),
       rect = _React$useReducer[0],
       dispatch = _React$useReducer[1];
 
@@ -152,7 +159,7 @@ function useRect(nodeRef) {
 function rectReducer(state, action) {
   var rect = action.rect;
 
-  if (!state || state.height !== rect.height || state.width !== rect.width) {
+  if (state.height !== rect.height || state.width !== rect.width) {
     return rect;
   }
 
@@ -163,15 +170,35 @@ var defaultEstimateSize = function defaultEstimateSize() {
   return 50;
 };
 
+var defaultKeyExtractor = function defaultKeyExtractor(index) {
+  return index;
+};
+
+var defaultMeasureSize = function defaultMeasureSize(el, horizontal) {
+  var key = horizontal ? 'offsetWidth' : 'offsetHeight';
+  return el[key];
+};
+
+var defaultRangeExtractor = function defaultRangeExtractor(range) {
+  var start = Math.max(range.start - range.overscan, 0);
+  var end = Math.min(range.end + range.overscan, range.size - 1);
+  var arr = [];
+
+  for (var i = start; i <= end; i++) {
+    arr.push(i);
+  }
+
+  return arr;
+};
 function useVirtual(_ref) {
-  var _ref3, _measurements;
+  var _measurements;
 
   var _ref$size = _ref.size,
       size = _ref$size === void 0 ? 0 : _ref$size,
       _ref$estimateSize = _ref.estimateSize,
       estimateSize = _ref$estimateSize === void 0 ? defaultEstimateSize : _ref$estimateSize,
       _ref$overscan = _ref.overscan,
-      overscan = _ref$overscan === void 0 ? 0 : _ref$overscan,
+      overscan = _ref$overscan === void 0 ? 1 : _ref$overscan,
       _ref$paddingStart = _ref.paddingStart,
       paddingStart = _ref$paddingStart === void 0 ? 0 : _ref$paddingStart,
       _ref$paddingEnd = _ref.paddingEnd,
@@ -179,15 +206,34 @@ function useVirtual(_ref) {
       parentRef = _ref.parentRef,
       horizontal = _ref.horizontal,
       scrollToFn = _ref.scrollToFn,
-      useObserver = _ref.useObserver;
+      useObserver = _ref.useObserver,
+      initialRect = _ref.initialRect,
+      onScrollElement = _ref.onScrollElement,
+      scrollOffsetFn = _ref.scrollOffsetFn,
+      _ref$keyExtractor = _ref.keyExtractor,
+      keyExtractor = _ref$keyExtractor === void 0 ? defaultKeyExtractor : _ref$keyExtractor,
+      _ref$measureSize = _ref.measureSize,
+      measureSize = _ref$measureSize === void 0 ? defaultMeasureSize : _ref$measureSize,
+      _ref$rangeExtractor = _ref.rangeExtractor,
+      rangeExtractor = _ref$rangeExtractor === void 0 ? defaultRangeExtractor : _ref$rangeExtractor;
   var sizeKey = horizontal ? 'width' : 'height';
   var scrollKey = horizontal ? 'scrollLeft' : 'scrollTop';
-  var latestRef = react.useRef({});
+  var latestRef = react.useRef({
+    scrollOffset: 0,
+    measurements: []
+  });
+
+  var _React$useState = react.useState(0),
+      scrollOffset = _React$useState[0],
+      setScrollOffset = _React$useState[1];
+
+  latestRef.current.scrollOffset = scrollOffset;
   var useMeasureParent = useObserver || useRect;
 
-  var _ref2 = useMeasureParent(parentRef) || (_ref3 = {}, _ref3[sizeKey] = 0, _ref3),
-      outerSize = _ref2[sizeKey];
+  var _useMeasureParent = useMeasureParent(parentRef, initialRect),
+      outerSize = _useMeasureParent[sizeKey];
 
+  latestRef.current.outerSize = outerSize;
   var defaultScrollToFn = react.useCallback(function (offset) {
     if (parentRef.current) {
       parentRef.current[scrollKey] = offset;
@@ -198,60 +244,56 @@ function useVirtual(_ref) {
     resolvedScrollToFn(offset, defaultScrollToFn);
   }, [defaultScrollToFn, resolvedScrollToFn]);
 
-  var _React$useState = react.useState({}),
-      measuredCache = _React$useState[0],
-      setMeasuredCache = _React$useState[1];
+  var _React$useState2 = react.useState({}),
+      measuredCache = _React$useState2[0],
+      setMeasuredCache = _React$useState2[1];
 
+  var measure = react.useCallback(function () {
+    return setMeasuredCache({});
+  }, []);
+  var pendingMeasuredCacheIndexesRef = react.useRef([]);
   var measurements = react.useMemo(function () {
-    var measurements = [];
+    var min = pendingMeasuredCacheIndexesRef.current.length > 0 ? Math.min.apply(Math, pendingMeasuredCacheIndexesRef.current) : 0;
+    pendingMeasuredCacheIndexesRef.current = [];
+    var measurements = latestRef.current.measurements.slice(0, min);
 
-    for (var i = 0; i < size; i++) {
-      var measuredSize = measuredCache[i];
-      var start = measurements[i - 1] ? measurements[i - 1].end : paddingStart;
+    for (var i = min; i < size; i++) {
+      var key = keyExtractor(i);
+      var measuredSize = measuredCache[key];
+
+      var _start = measurements[i - 1] ? measurements[i - 1].end : paddingStart;
 
       var _size = typeof measuredSize === 'number' ? measuredSize : estimateSize(i);
 
-      var end = start + _size;
+      var _end = _start + _size;
+
       measurements[i] = {
         index: i,
-        start: start,
+        start: _start,
         size: _size,
-        end: end
+        end: _end,
+        key: key
       };
     }
 
     return measurements;
-  }, [estimateSize, measuredCache, paddingStart, size]);
-  var totalSize = (((_measurements = measurements[size - 1]) == null ? void 0 : _measurements.end) || 0) + paddingEnd;
-  Object.assign(latestRef.current, {
-    overscan: overscan,
-    measurements: measurements,
-    outerSize: outerSize,
-    totalSize: totalSize
-  });
-
-  var _React$useState2 = react.useState({
-    start: 0,
-    end: 0
-  }),
-      range = _React$useState2[0],
-      setRange = _React$useState2[1];
-
+  }, [estimateSize, measuredCache, paddingStart, size, keyExtractor]);
+  var totalSize = (((_measurements = measurements[size - 1]) == null ? void 0 : _measurements.end) || paddingStart) + paddingEnd;
+  latestRef.current.measurements = measurements;
+  latestRef.current.totalSize = totalSize;
+  var element = onScrollElement ? onScrollElement.current : parentRef.current;
+  var scrollOffsetFnRef = react.useRef(scrollOffsetFn);
+  scrollOffsetFnRef.current = scrollOffsetFn;
   useIsomorphicLayoutEffect(function () {
-    var element = parentRef.current;
-
     if (!element) {
+      setScrollOffset(0);
       return;
     }
 
-    var onScroll = function onScroll() {
-      var scrollOffset = element[scrollKey];
-      latestRef.current.scrollOffset = scrollOffset;
-      setRange(function (prevRange) {
-        return calculateRange(latestRef.current, prevRange);
-      });
-    }; // Determine initially visible range
-
+    var onScroll = function onScroll(event) {
+      var offset = scrollOffsetFnRef.current ? scrollOffsetFnRef.current(event) : element[scrollKey];
+      setScrollOffset(offset);
+    };
 
     onScroll();
     element.addEventListener('scroll', onScroll, {
@@ -261,35 +303,46 @@ function useVirtual(_ref) {
     return function () {
       element.removeEventListener('scroll', onScroll);
     };
-  }, [parentRef.current, scrollKey, size
-  /* required */
-  , outerSize
-  /* required */
-  ]);
+  }, [element, scrollKey]);
+
+  var _calculateRange = calculateRange(latestRef.current),
+      start = _calculateRange.start,
+      end = _calculateRange.end;
+
+  var indexes = react.useMemo(function () {
+    return rangeExtractor({
+      start: start,
+      end: end,
+      overscan: overscan,
+      size: measurements.length
+    });
+  }, [start, end, overscan, measurements.length, rangeExtractor]);
+  var measureSizeRef = react.useRef(measureSize);
+  measureSizeRef.current = measureSize;
   var virtualItems = react.useMemo(function () {
     var virtualItems = [];
-    var end = Math.min(range.end, measurements.length - 1);
 
-    var _loop = function _loop(i) {
+    var _loop = function _loop(k, len) {
+      var i = indexes[k];
       var measurement = measurements[i];
 
       var item = _extends(_extends({}, measurement), {}, {
         measureRef: function measureRef(el) {
-          var scrollOffset = latestRef.current.scrollOffset;
-
           if (el) {
-            var _el$getBoundingClient = el.getBoundingClientRect(),
-                measuredSize = _el$getBoundingClient[sizeKey];
+            var measuredSize = measureSizeRef.current(el, horizontal);
 
             if (measuredSize !== item.size) {
-              if (item.start < scrollOffset) {
-                defaultScrollToFn(scrollOffset + (measuredSize - item.size));
+              var _scrollOffset = latestRef.current.scrollOffset;
+
+              if (item.start < _scrollOffset) {
+                defaultScrollToFn(_scrollOffset + (measuredSize - item.size));
               }
 
+              pendingMeasuredCacheIndexesRef.current.push(i);
               setMeasuredCache(function (old) {
                 var _extends2;
 
-                return _extends(_extends({}, old), {}, (_extends2 = {}, _extends2[i] = measuredSize, _extends2));
+                return _extends(_extends({}, old), {}, (_extends2 = {}, _extends2[item.key] = measuredSize, _extends2));
               });
             }
           }
@@ -299,24 +352,24 @@ function useVirtual(_ref) {
       virtualItems.push(item);
     };
 
-    for (var i = range.start; i <= end; i++) {
-      _loop(i);
+    for (var k = 0, len = indexes.length; k < len; k++) {
+      _loop(k);
     }
 
     return virtualItems;
-  }, [range.start, range.end, measurements, sizeKey, defaultScrollToFn]);
-  var mountedRef = react.useRef();
+  }, [indexes, defaultScrollToFn, horizontal, measurements]);
+  var mountedRef = react.useRef(false);
   useIsomorphicLayoutEffect(function () {
     if (mountedRef.current) {
-      if (estimateSize || size) setMeasuredCache({});
+      setMeasuredCache({});
     }
 
     mountedRef.current = true;
-  }, [estimateSize, size]);
+  }, [estimateSize]);
   var scrollToOffset = react.useCallback(function (toOffset, _temp) {
-    var _ref4 = _temp === void 0 ? {} : _temp,
-        _ref4$align = _ref4.align,
-        align = _ref4$align === void 0 ? 'start' : _ref4$align;
+    var _ref2 = _temp === void 0 ? {} : _temp,
+        _ref2$align = _ref2.align,
+        align = _ref2$align === void 0 ? 'start' : _ref2$align;
 
     var _latestRef$current = latestRef.current,
         scrollOffset = _latestRef$current.scrollOffset,
@@ -325,7 +378,7 @@ function useVirtual(_ref) {
     if (align === 'auto') {
       if (toOffset <= scrollOffset) {
         align = 'start';
-      } else if (scrollOffset >= scrollOffset + outerSize) {
+      } else if (toOffset >= scrollOffset + outerSize) {
         align = 'end';
       } else {
         align = 'start';
@@ -341,10 +394,10 @@ function useVirtual(_ref) {
     }
   }, [scrollToFn]);
   var tryScrollToIndex = react.useCallback(function (index, _temp2) {
-    var _ref5 = _temp2 === void 0 ? {} : _temp2,
-        _ref5$align = _ref5.align,
-        align = _ref5$align === void 0 ? 'auto' : _ref5$align,
-        rest = _objectWithoutPropertiesLoose(_ref5, ["align"]);
+    var _ref3 = _temp2 === void 0 ? {} : _temp2,
+        _ref3$align = _ref3.align,
+        align = _ref3$align === void 0 ? 'auto' : _ref3$align,
+        rest = _objectWithoutPropertiesLoose(_ref3, ["align"]);
 
     var _latestRef$current2 = latestRef.current,
         measurements = _latestRef$current2.measurements,
@@ -390,40 +443,53 @@ function useVirtual(_ref) {
     virtualItems: virtualItems,
     totalSize: totalSize,
     scrollToOffset: scrollToOffset,
-    scrollToIndex: scrollToIndex
+    scrollToIndex: scrollToIndex,
+    measure: measure
   };
 }
 
-function calculateRange(_ref6, prevRange) {
-  var overscan = _ref6.overscan,
-      measurements = _ref6.measurements,
-      outerSize = _ref6.outerSize,
-      scrollOffset = _ref6.scrollOffset;
-  var total = measurements.length;
-  var start = total - 1;
+var findNearestBinarySearch = function findNearestBinarySearch(low, high, getCurrentValue, value) {
+  while (low <= high) {
+    var middle = (low + high) / 2 | 0;
+    var currentValue = getCurrentValue(middle);
 
-  while (start > 0 && measurements[start].end >= scrollOffset) {
-    start -= 1;
+    if (currentValue < value) {
+      low = middle + 1;
+    } else if (currentValue > value) {
+      high = middle - 1;
+    } else {
+      return middle;
+    }
   }
 
-  var end = 0;
+  if (low > 0) {
+    return low - 1;
+  } else {
+    return 0;
+  }
+};
 
-  while (end < total - 1 && measurements[end].start <= scrollOffset + outerSize) {
-    end += 1;
-  } // Always add at least one overscan item, so focus will work
+function calculateRange(_ref4) {
+  var measurements = _ref4.measurements,
+      outerSize = _ref4.outerSize,
+      scrollOffset = _ref4.scrollOffset;
+  var size = measurements.length - 1;
 
+  var getOffset = function getOffset(index) {
+    return measurements[index].start;
+  };
 
-  start = Math.max(start - overscan, 0);
-  end = Math.min(end + overscan, total - 1);
+  var start = findNearestBinarySearch(0, size, getOffset, scrollOffset);
+  var end = start;
 
-  if (!prevRange || prevRange.start !== start || prevRange.end !== end) {
-    return {
-      start: start,
-      end: end
-    };
+  while (end < size && measurements[end].end < scrollOffset + outerSize) {
+    end++;
   }
 
-  return prevRange;
+  return {
+    start: start,
+    end: end
+  };
 }
 
 export { useVirtual };

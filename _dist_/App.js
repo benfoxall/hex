@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "../web_modules/react.js";
 import {useDropzone} from "../web_modules/react-dropzone.js";
-import {Hex as Hex2} from "./Hex.js";
-import {Usage as Usage2} from "./Usage.js";
+import {Hex} from "./Hex.js";
+import {Usage} from "./Usage.js";
 import {ByteSize, useObjectURL} from "./util.js";
 export const App = () => {
   const [file, setFile] = useState();
@@ -56,7 +56,7 @@ export const App = () => {
   }, "\u2193 Save"), /* @__PURE__ */ React.createElement("button", {
     onClick: close,
     title: "Close file"
-  }, "Close"))))), file ? /* @__PURE__ */ React.createElement(Hex2, {
+  }, "Close"))))), file ? /* @__PURE__ */ React.createElement(Hex, {
     blob: file
   }) : window.opener === null && /* @__PURE__ */ React.createElement("section", {
     className: "info"
@@ -66,7 +66,7 @@ export const App = () => {
   }, "Open a file")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
     onClick: toggleShowUsage,
     href: "#"
-  }, "Via browser console \u2728"))), showUsage && /* @__PURE__ */ React.createElement(Usage2, null), /* @__PURE__ */ React.createElement("p", null, "Sample files:", " ", /* @__PURE__ */ React.createElement("a", {
+  }, "Via browser console \u2728"))), showUsage && /* @__PURE__ */ React.createElement(Usage, null), /* @__PURE__ */ React.createElement("p", null, "Sample files:", " ", /* @__PURE__ */ React.createElement("a", {
     onClick: demo,
     name: "index.html",
     href: "."
