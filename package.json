@@ -8,8 +8,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "start": "snowpack dev",
-    "build": "snowpack build && workbox generateSW workbox-config.cjs"
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -22,24 +24,22 @@
   },
   "homepage": "https://github.com/benfoxall/hex#readme",
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1",
-    "@vitejs/plugin-react": "^5.1.2",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "@vitest/ui": "^4.0.17",
     "happy-dom": "^20.3.1",
-    "highlight.js": "^10.5.0",
-    "jsdom": "^27.4.0",
-    "snowpack": "^2.18.5",
-    "vitest": "^4.0.17",
-    "workbox-cli": "^6.0.2"
+    "highlight.js": "^11.11.1",
+    "vite": "^6.0.7",
+    "vite-plugin-pwa": "^0.21.2",
+    "vitest": "^4.0.17"
   },
   "dependencies": {
-    "pretty-bytes": "^5.5.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-dropzone": "^11.2.4",
-    "react-virtual": "^2.3.2",
-    "workbox-window": "^6.0.2"
+    "pretty-bytes": "^6.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.8",
+    "@tanstack/react-virtual": "^3.13.18",
+    "workbox-window": "^7.4.0"
   }
 }

@@ -6,6 +6,8 @@ A browser based hex viewer ✨
 
 ## Development
 
+This project uses [Vite](https://vite.dev/) as its build system.
+
 ### Running Tests
 
 This project includes tests to help catch regressions when updating dependencies:
@@ -21,15 +23,25 @@ npm run test:watch
 npm run test:ui
 ```
 
+### Development Server
+
+```bash
+npm start
+# or
+npm run dev
+```
+
 ### Building
 
 ```bash
 npm run build
 ```
 
-### Development Server
+The build output will be in the `build/` directory.
+
+### Preview Production Build
 
 ```bash
-npm start
+npm run preview
 ```
 
